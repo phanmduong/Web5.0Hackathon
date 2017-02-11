@@ -34,7 +34,9 @@ var create = function () {
 
     Clash.background = Clash.game.add.tileSprite(0, 0, 512 , 512, 'background');
 
-    Clash.game.sprite.add()
+    Clash.ship = Clash.game.add.sprite(Clash.game.width/2, Clash.game.height/2,"assets", "player1.png");
+    Clash.ship.sprite.anchor.setTo(0.5, 0.5);
+    //Clash.ship.sprite.anchor = new Phaser.Point(0.5, 0.5);
 }
 
 // update game state each frame
