@@ -2,7 +2,7 @@ var Clash = {};
 Clash.configs = {};
 
 window.onload = function () {
-    Clash.game = new Phaser.Game(512, 512, Phaser.AUTO, '',
+    Clash.game = new Phaser.Game(960, 960, Phaser.AUTO, '',
         {
             preload: preload,
             create: create,
@@ -27,15 +27,15 @@ var preload = function () {
     Clash.game.load.image('background', 'Assets/background/space1.jpg');
 }
 
-// initialize the game
+// initialize the games
 var create = function () {
     Clash.game.physics.startSystem(Phaser.Physics.ARCADE);
     Clash.keyboard = Clash.game.input.keyboard;
 
-    Clash.background = Clash.game.add.tileSprite(0, 0, 512 , 512, 'background');
+    Clash.background = Clash.game.add.tileSprite(0, 0, 960 , 960, 'background');
 
-    Clash.ship = Clash.game.add.sprite(Clash.game.width/2, Clash.game.height/2,"assets", "player1.png");
-    Clash.ship.sprite.anchor.setTo(0.5, 0.5);
+    Clash.game.add.sprite(Clash.game.width/2, Clash.game.height/2,"assets", "player1.png").anchor = new Phaser.Point(0.5, 0.5) ;
+  //  ship.sprite.anchor = new Phaser.Point(0.5, 0.5);
     //Clash.ship.sprite.anchor = new Phaser.Point(0.5, 0.5);
 }
 
