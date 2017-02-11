@@ -1,136 +1,24 @@
 {"frames": {
 
-"finalboss1-damage1.png":
+"base.png":
 {
-	"frame": {"x":260,"y":2,"w":248,"h":198},
+	"frame": {"x":2,"y":2,"w":256,"h":256},
 	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":5,"y":10,"w":248,"h":198},
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
 	"sourceSize": {"w":256,"h":256}
 },
-"finalboss1-damage2.png":
+"bullet-cannon2.png":
 {
-	"frame": {"x":2,"y":2,"w":256,"h":128},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":128},
-	"sourceSize": {"w":256,"h":128}
-},
-"finalboss1.png":
-{
-	"frame": {"x":2,"y":132,"w":246,"h":196},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":6,"y":12,"w":246,"h":196},
-	"sourceSize": {"w":256,"h":256}
-},
-"mine1-small1-part1.png":
-{
-	"frame": {"x":62,"y":462,"w":50,"h":48},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":8,"y":0,"w":50,"h":48},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small1-part2.png":
-{
-	"frame": {"x":132,"y":330,"w":52,"h":60},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":12,"y":4,"w":52,"h":60},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small1-part3.png":
-{
-	"frame": {"x":2,"y":462,"w":48,"h":58},
+	"frame": {"x":2,"y":326,"w":32,"h":30},
 	"rotated": true,
 	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":3,"w":48,"h":58},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small1.png":
-{
-	"frame": {"x":68,"y":330,"w":62,"h":64},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":0,"w":62,"h":64},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small2-part1.png":
-{
-	"frame": {"x":174,"y":458,"w":52,"h":60},
-	"rotated": true,
-	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":4,"w":52,"h":60},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small2-part2.png":
-{
-	"frame": {"x":192,"y":388,"w":46,"h":56},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":18,"y":4,"w":46,"h":56},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small2-part3.png":
-{
-	"frame": {"x":240,"y":330,"w":46,"h":52},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":8,"y":0,"w":46,"h":52},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small2.png":
-{
-	"frame": {"x":2,"y":396,"w":64,"h":64},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small3-part1.png":
-{
-	"frame": {"x":186,"y":330,"w":52,"h":56},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":8,"w":52,"h":56},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small3-part2.png":
-{
-	"frame": {"x":114,"y":462,"w":46,"h":58},
-	"rotated": true,
-	"trimmed": true,
-	"spriteSourceSize": {"x":18,"y":6,"w":46,"h":58},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small3-part3.png":
-{
-	"frame": {"x":236,"y":446,"w":54,"h":50},
-	"rotated": true,
-	"trimmed": true,
-	"spriteSourceSize": {"x":3,"y":0,"w":54,"h":50},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine1-small3.png":
-{
-	"frame": {"x":2,"y":330,"w":64,"h":64},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
-	"sourceSize": {"w":64,"h":64}
-},
-"mine4-big1.png":
-{
-	"frame": {"x":130,"y":396,"w":60,"h":60},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":1,"y":2,"w":60,"h":60},
-	"sourceSize": {"w":64,"h":64}
+	"spriteSourceSize": {"x":0,"y":2,"w":32,"h":30},
+	"sourceSize": {"w":32,"h":32}
 },
 "player1.png":
 {
-	"frame": {"x":68,"y":396,"w":60,"h":64},
+	"frame": {"x":2,"y":260,"w":60,"h":64},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":0,"w":60,"h":64},
@@ -139,10 +27,10 @@
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker ",
 	"version": "1.0",
-	"image": "texture.png",
+	"image": "assets.png",
 	"format": "RGBA8888",
 	"size": {"w":512,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:e985d39ca19428569b513b5f062276a0:1/1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a84ba55c128acdc03e10a057ae5c995f:1/1$"
 }
 }
