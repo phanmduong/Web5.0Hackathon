@@ -32,10 +32,10 @@ var create = function () {
     Clash.game.physics.startSystem(Phaser.Physics.ARCADE);
     Clash.keyboard = Clash.game.input.keyboard;
 
-    Clash.background = Clash.game.add.tileSprite(0, 0, 960 , 960, 'background');
+    Clash.background = Clash.game.add.tileSprite(0, 0, 960, 960, 'background');
 
-    Clash.game.add.sprite(Clash.game.width/2, Clash.game.height/2,"assets", "player1.png").anchor = new Phaser.Point(0.5, 0.5) ;
-  //  ship.sprite.anchor = new Phaser.Point(0.5, 0.5);
+    Clash.ship = Clash.game.add.sprite(Clash.game.width / 2, Clash.game.height / 2, "assets", "player1.png");
+    Clash.ship.anchor = new Phaser.Point(0.5, 0.5);
     //Clash.ship.sprite.anchor = new Phaser.Point(0.5, 0.5);
 }
 
