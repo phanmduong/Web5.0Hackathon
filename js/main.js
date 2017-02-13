@@ -45,32 +45,30 @@ var create = function () {
 }
 
 var createDisplay = function () {
-    createObjectDisplay(Clash.display.weapon,{x:70, y:70},"cannon1.jpg");
+    Clash.display.weapon  = createObjectDisplay({x:70, y:70},"cannon1.jpg");
 
-    createObjectDisplay(Clash.display.frameWeapon,{x:70, y:70},"weapon.png");
+    Clash.display.frameWeapon = createObjectDisplay({x:70, y:70},"weapon.png");
 
-    //Clash.display.frameWeapon.scale.setTo(1.6, 1.6);
+    Clash.display.frameWeapon.scale.setTo(1.6, 1.6);
 
-    createObjectDisplay(Clash.display.iconEarthHP,{x:150, y:190},"hp-detail.png");
+    Clash.display.iconEarthHP = createObjectDisplay({x:150, y:190},"hp-detail.png");
 
-    createObjectDisplay(Clash.display.iconEarthXP,{x:165, y:220},"xp-detail.png");
+    Clash.display.iconEarthXP = createObjectDisplay({x:165, y:220},"xp-detail.png");
 
-    createObjectDisplay(Clash.display.iconEarth,{x:70, y:190},"planet-small.png");
+    Clash.display.iconEarth = createObjectDisplay({x:70, y:190},"planet-small.png");
 
-    createObjectDisplay(Clash.display.iconShipHP,{x:150, y:280},"hp-detail.png");
+    Clash.display.iconShipHP = createObjectDisplay({x:150, y:280},"hp-detail.png");
 
-    createObjectDisplay(Clash.display.iconShipXP,{x:165, y:310},"xp-detail.png");
-    Clash.display.iconShipXP = Clash.game.add.sprite(165, 310, "assets", "xp-detail.png");
-    Clash.display.iconShipXP.anchor = new Phaser.Point(0.5, 0.5);
-    Clash.display.iconShipXP.scale.setTo(1.5, 1.5);
+    Clash.display.iconShipXP = createObjectDisplay({x:165, y:310},"xp-detail.png");
 
-    createObjectDisplay(Clash.display.iconShip,{x:70, y:280},"player1.png");
+    Clash.display.iconShip = createObjectDisplay({x:70, y:280},"player1.png");
 }
 
-var createObjectDisplay= function(objectDislay, position, spriteName){
-    objectDislay = Clash.game.add.sprite(position.x, position.y, "assets", spriteName);
-    objectDislay.anchor = new Phaser.Point(0.5, 0.5);
-    objectDislay.scale.setTo(1.5, 1.5);
+var createObjectDisplay= function(position, spriteName){
+   var objectDisplay = Clash.game.add.sprite(position.x, position.y, "assets", spriteName);
+    objectDisplay.anchor = new Phaser.Point(0.5, 0.5);
+    objectDisplay.scale.setTo(1.5, 1.5);
+    return objectDisplay;
 }
 
 // update game state each frame
