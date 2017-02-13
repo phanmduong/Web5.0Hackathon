@@ -40,6 +40,7 @@ var create = function () {
     Clash.ship = Clash.game.add.sprite(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "assets", "player1.png");
     Clash.ship.anchor = new Phaser.Point(0.5, 0.5);
 
+
     //Mọi công việc làm trước hàm này
     createDisplay();
 }
@@ -73,8 +74,33 @@ var createObjectDisplay= function(position, spriteName){
 
 // update game state each frame
 var update = function () {
+    Clash.ship.rotation = Clash.game.physics.arcade.angleToPointer(Clash.ship)+Math.PI/2;
+    if (Clash.game.input.activePointer.isDown)
+    {
+        fire();
+    }
+}
+
+function fire() {
+
+    if (Clash.game.time.now > nextFire && bullets.countDead() > 0)
+    {
+        nextFire = Clash.game.time.now + fireRate;
+
+        var bullet = bullets.getFirstDead();
+
+        bullet.reset(sprite.x - 8, sprite.y - 8);
+
+        Clash.game.physics.arcade.moveToPointer(bullet, 300);
+    }
+
+}
+// before camera render (mostly for debug)
+var render = function () {
+    Clash.game.debug.spriteInfo(Clash.ship , 32, 100);
 }
 
 // before camera render (mostly for debug)
 var render = function () {
+    // Clash.game.debug.body(Clash.earth.sprite);
 }
