@@ -8,17 +8,9 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
 	"sourceSize": {"w":256,"h":256}
 },
-"bullet-cannon2.png":
-{
-	"frame": {"x":2,"y":460,"w":32,"h":30},
-	"rotated": true,
-	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":2,"w":32,"h":30},
-	"sourceSize": {"w":32,"h":32}
-},
 "cannon1.jpg":
 {
-	"frame": {"x":30,"y":392,"w":64,"h":64},
+	"frame": {"x":260,"y":120,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -26,39 +18,23 @@
 },
 "cover-bullet.png":
 {
-	"frame": {"x":34,"y":458,"w":10,"h":24},
+	"frame": {"x":456,"y":2,"w":16,"h":32},
 	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":3,"y":3,"w":10,"h":24},
-	"sourceSize": {"w":16,"h":32}
-},
-"cover-rocket.png":
-{
-	"frame": {"x":2,"y":494,"w":14,"h":28},
-	"rotated": true,
-	"trimmed": true,
-	"spriteSourceSize": {"x":1,"y":2,"w":14,"h":28},
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
 	"sourceSize": {"w":16,"h":32}
 },
 "hp-detail.png":
 {
-	"frame": {"x":2,"y":360,"w":98,"h":26},
-	"rotated": true,
-	"trimmed": true,
-	"spriteSourceSize": {"x":21,"y":3,"w":98,"h":26},
-	"sourceSize": {"w":128,"h":32}
-},
-"level-detail.png":
-{
-	"frame": {"x":2,"y":260,"w":98,"h":26},
-	"rotated": true,
-	"trimmed": true,
-	"spriteSourceSize": {"x":21,"y":3,"w":98,"h":26},
+	"frame": {"x":260,"y":2,"w":128,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":32},
 	"sourceSize": {"w":128,"h":32}
 },
 "planet-small.png":
 {
-	"frame": {"x":30,"y":326,"w":64,"h":64},
+	"frame": {"x":326,"y":68,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -66,15 +42,15 @@
 },
 "player1.png":
 {
-	"frame": {"x":96,"y":260,"w":60,"h":64},
+	"frame": {"x":260,"y":54,"w":64,"h":64},
 	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":2,"y":0,"w":60,"h":64},
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
 },
 "weapon.png":
 {
-	"frame": {"x":30,"y":260,"w":64,"h":64},
+	"frame": {"x":390,"y":2,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -82,10 +58,10 @@
 },
 "xp-detail.png":
 {
-	"frame": {"x":32,"y":494,"w":70,"h":10},
+	"frame": {"x":260,"y":36,"w":128,"h":16},
 	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":30,"y":3,"w":70,"h":10},
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":16},
 	"sourceSize": {"w":128,"h":16}
 }},
 "meta": {
@@ -95,6 +71,6 @@
 	"format": "RGBA8888",
 	"size": {"w":512,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:b0be8ae9b4cfb13ee9ebda619d05c7f8:1/1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:33e0711f0ad113d09778da7ff4555dc3:1/1$"
 }
 }
