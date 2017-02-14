@@ -43,9 +43,20 @@ var create = function () {
     Clash.ship = Clash.game.add.sprite(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "assets", "player1.png");
     Clash.ship.anchor = new Phaser.Point(0.5, 0.5);
 
+    Clash.enemyGroup = Clash.game.add.physicsGroup();       //T Dương
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
     //Mọi công việc làm trước hàm này
     createDisplay();
+
+    //Tạo tàu địch
+    Clash.enemies = [];
+    // Đang có lỗi (Chắc là do k có ufo1-small1 trong assets)
+    // Clash.enemies.push(
+    //   new EnemyController(320, 320, "ufo1-small1.png",{
+    //     health    : 10
+    //   })
+    // );
+
 }
 
 var createDisplay = function () {
@@ -66,6 +77,7 @@ var createObjectDisplay= function(position, spriteName){
     objectDisplay.anchor = new Phaser.Point(0.5, 0.5);
     objectDisplay.scale.setTo(1.5, 1.5);
     return objectDisplay;
+
 }
 
 // update game state each frame
