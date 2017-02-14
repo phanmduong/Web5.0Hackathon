@@ -1,5 +1,7 @@
 var Clash = {};
-Clash.configs = {};
+Clash.configs = {
+  spawmtime : 0.6
+};
 Clash.display = {};
 
 window.onload = function () {
@@ -51,13 +53,9 @@ var create = function () {
 
     //Tạo tàu địch
     Clash.enemies = [];
-    // Đang có lỗi (Chắc là do k có ufo1-small1 trong assets)
-    // Clash.enemies.push(
-    //   new EnemyController(320, 320, "ufo1-small1.png",{
-    //     health    : 10
-    //   })
-    // );
-
+    Clash.timeSinceLastSpawmEnemies = 0;
+    Clash.enemiesShipTempX = Clash.game.height /2;
+    Clash.enemiesShipTempY = Clash.game.width /2;
 }
 
 var createDisplay = function () {
@@ -101,6 +99,28 @@ var update = function () {
     Clash.ship.rotation = Clash.game.physics.arcade.angleToPointer(Clash.ship) + Math.PI / 2;
     if (Clash.game.input.activePointer.isDown) {
         fire();
+    }
+    // TDuong
+    Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
+    if (Clash.timeSinceLastSpawmEnemies>Clash.configs.spawmtime) {
+        Clash.enemiesShipTempX=Clash.game.world.randomX;
+        Clash.enemiesShipTempY=Clash.game.world.randomY;
+        while ( (Clash.enemiesShipTempX-Clash.game.height /2)*(Clash.enemiesShipTempX-Clash.game.height /2)+
+          (Clash.enemiesShipTempY-Clash.game.width /2)*(Clash.enemiesShipTempY-Clash.game.width /2) < 200*200 ){
+            Clash.enemiesShipTempX = Clash.game.world.randomX;
+            Clash.enemiesShipTempY = Clash.game.world.randomY;
+          }
+
+        Clash.enemies.push(
+          new EnemyController(
+            Clash.enemiesShipTempX,
+            Clash.enemiesShipTempY,
+            "ufo1-small1.png",
+            {
+              health    : 10
+            })
+        );
+        Clash.timeSinceLastSpawmEnemies = 0;
     }
 }
 
