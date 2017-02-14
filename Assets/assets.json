@@ -16,9 +16,17 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
 },
+"clock1.png":
+{
+	"frame": {"x":456,"y":60,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
 "cover-bullet.png":
 {
-	"frame": {"x":456,"y":2,"w":16,"h":32},
+	"frame": {"x":490,"y":60,"w":16,"h":32},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
@@ -31,6 +39,22 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":32},
 	"sourceSize": {"w":128,"h":32}
+},
+"hp-earth.png":
+{
+	"frame": {"x":456,"y":39,"w":52,"h":19},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":19},
+	"sourceSize": {"w":52,"h":19}
+},
+"hp-ship.png":
+{
+	"frame": {"x":456,"y":18,"w":52,"h":19},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":19},
+	"sourceSize": {"w":52,"h":19}
 },
 "planet-small.png":
 {
@@ -63,6 +87,22 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":16},
 	"sourceSize": {"w":128,"h":16}
+},
+"xp-earth.png":
+{
+	"frame": {"x":456,"y":10,"w":53,"h":6},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":53,"h":6},
+	"sourceSize": {"w":53,"h":6}
+},
+"xp-ship.png":
+{
+	"frame": {"x":456,"y":2,"w":53,"h":6},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":53,"h":6},
+	"sourceSize": {"w":53,"h":6}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker ",
@@ -71,6 +111,6 @@
 	"format": "RGBA8888",
 	"size": {"w":512,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:33e0711f0ad113d09778da7ff4555dc3:1/1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:e8d9c3043a0104b5b2dba825d643153d:1/1$"
 }
 }
