@@ -109,4 +109,6 @@ function createBullet(direction) {
 // before camera render (mostly for debug)
 var render = function () {
     Clash.game.debug.body(Clash.display.iconMouse);
+    Clash.game.debug.spriteBounds(Clash.earth.sprite);
+    Clash.game.debug.spriteBounds(Clash.display.iconEarth);
 }
