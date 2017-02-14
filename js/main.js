@@ -28,6 +28,8 @@ var preload = function () {
 
     Clash.game.load.atlasJSONHash('assets', 'Assets/assets.png', 'Assets/assets.json');
     Clash.game.load.image('background', 'Assets/background/space1.jpg');
+
+
 }
 
 var bullets;
@@ -41,6 +43,21 @@ var create = function () {
 
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png");
+
+    //T.Hieu
+    Clash.players = Clash.game.add.physicsGroup();
+    Clash.players = [];
+    // Clash.players.push (
+    //  new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png")
+    // );
+
+   bullets = Clash.game.add.physicsGroup();
+   bullets.enableBody = true;
+   bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+   bullets.createMultiple(50, 'cover-bullet.png');
+   bullets.setAll('checkWorldBounds', true);
+   bullets.setAll('outOfBoundsKill', true);
 
     Clash.ship = Clash.game.add.sprite(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "assets", "player1.png");
     Clash.ship.anchor = new Phaser.Point(0.5, 0.5);
@@ -93,51 +110,63 @@ var createObjectDisplay = function (position, spriteName, isAnchor) {
 // update game state each frame
 var update = function () {
     // console.log(Clash.game.input.activePointer);
-    Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
-    ;
+
+    //  Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
+    //  ;
+
     // Clash.game.physics.arcade.moveToPointer(Clash.display.iconMouse, 10000);
+
     Clash.ship.rotation = Clash.game.physics.arcade.angleToPointer(Clash.ship) + Math.PI / 2;
     if (Clash.game.input.activePointer.isDown) {
         fire();
     }
     // TDuong
-    Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
-    if (Clash.timeSinceLastSpawmEnemies>Clash.configs.spawmtime) {
-        Clash.enemiesShipTempX=Clash.game.world.randomX;
-        Clash.enemiesShipTempY=Clash.game.world.randomY;
-        while ( (Clash.enemiesShipTempX-Clash.game.height /2)*(Clash.enemiesShipTempX-Clash.game.height /2)+
-          (Clash.enemiesShipTempY-Clash.game.width /2)*(Clash.enemiesShipTempY-Clash.game.width /2) < 200*200 ){
-            Clash.enemiesShipTempX = Clash.game.world.randomX;
-            Clash.enemiesShipTempY = Clash.game.world.randomY;
-          }
-
-        Clash.enemies.push(
-          new EnemyController(
-            Clash.enemiesShipTempX,
-            Clash.enemiesShipTempY,
-            "ufo1-small1.png",
-            {
-              health    : 10
-            })
-        );
-        Clash.timeSinceLastSpawmEnemies = 0;
-    }
+    // Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
+    // if (Clash.timeSinceLastSpawmEnemies>Clash.configs.spawmtime) {
+    //     Clash.enemiesShipTempX=Clash.game.world.randomX;
+    //     Clash.enemiesShipTempY=Clash.game.world.randomY;
+    //     while ( (Clash.enemiesShipTempX-Clash.game.height /2)*(Clash.enemiesShipTempX-Clash.game.height /2)+
+    //       (Clash.enemiesShipTempY-Clash.game.width /2)*(Clash.enemiesShipTempY-Clash.game.width /2) < 200*200 ){
+    //         Clash.enemiesShipTempX = Clash.game.world.randomX;
+    //         Clash.enemiesShipTempY = Clash.game.world.randomY;
+    //       }
+    //
+    //     Clash.enemies.push(
+    //       new EnemyController(
+    //         Clash.enemiesShipTempX,
+    //         Clash.enemiesShipTempY,
+    //         "ufo1-small1.png",
+    //         {
+    //           health    : 10
+    //         })
+    //     );
+    //     Clash.timeSinceLastSpawmEnemies = 0;
+    // }
 }
 
 function fire() {
 
 
-    Clash.game.physics.arcade.moveToPointer(Clash.ship, 300);
+  if (Clash.game.time.now > nextFire && bullets.countDead() > 0)
+    {
+        nextFire = Clash.game.time.now + fireRate;
+
+        var bullet = bullets.getFirstDead();
+
+        Clash.game.physics.arcade.moveToPointer(bullet, 300);
+    }
+    //Clash.game.physics.arcade.moveToPointer(Clash.ship, 300);
 
 
 }
 
-function createBullet(direction) {
-    new PlayerBulletType1Controller(
-        Clash.game.input.pointer.position,
-        direction
-    );
-}
+
+// function createBullet(direction) {
+//     new PlayerBulletType1Controller(
+//         Clash.game.input.pointer.position,
+//         direction
+//     );
+// }
 // before camera render (mostly for debug)
 var render = function () {
     Clash.game.debug.body(Clash.display.iconMouse);
