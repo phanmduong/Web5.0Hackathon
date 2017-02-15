@@ -1,6 +1,9 @@
 var Clash = {};
 Clash.configs = {
-  spawmtime : 0.6
+  spawmtime : 0.6,
+  bulletSpeed : 300,
+  nextFire : 0,
+  fireRate : 100
 };
 Clash.display = {};
 
@@ -32,9 +35,7 @@ var preload = function () {
 
 }
 
-var bullets;
-var fireRate = 100;
-var nextFire = 0;
+
 
 // initialize the games
 var create = function () {
@@ -101,6 +102,7 @@ var update = function () {
 
     // Clash.game.physics.arcade.moveToPointer(Clash.display.iconMouse, 10000);
     Clash.players.sprite.rotation = Clash.game.physics.arcade.angleToPointer(Clash.players.sprite)+ Math.PI / 2;
+    Clash.players.update();
 
     // if (Clash.game.input.activePointer.isDown) {
     //     fire();
@@ -132,21 +134,21 @@ var update = function () {
     }
 }
 
-function fire() {
-
-
-  if (Clash.game.time.now > nextFire && bullets.countDead() > 0)
-    {
-        nextFire = Clash.game.time.now + fireRate;
-
-        var bullet = bullets.getFirstDead();
-
-        Clash.game.physics.arcade.moveToPointer(bullet, 300);
-    }
-    //Clash.game.physics.arcade.moveToPointer(Clash.ship, 300);
-
-
-}
+// function fire() {
+//
+//
+//   if (Clash.game.time.now > nextFire && bullets.countDead() > 0)
+//     {
+//         nextFire = Clash.game.time.now + fireRate;
+//
+//         var bullet = bullets.getFirstDead();
+//
+//         Clash.game.physics.arcade.moveToPointer(bullet, 300);
+//     }
+//     //Clash.game.physics.arcade.moveToPointer(Clash.ship, 300);
+//
+//
+// }
 
 
 // function createBullet(direction) {
