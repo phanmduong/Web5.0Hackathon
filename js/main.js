@@ -46,22 +46,7 @@ var create = function () {
 
     //T.Hieu
     Clash.players = Clash.game.add.physicsGroup();
-    Clash.players = [];
-    // Clash.players.push (
-    //  new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png")
-    // );
-
-   bullets = Clash.game.add.physicsGroup();
-   bullets.enableBody = true;
-   bullets.physicsBodyType = Phaser.Physics.ARCADE;
-
-   bullets.createMultiple(50, 'cover-bullet.png');
-   bullets.setAll('checkWorldBounds', true);
-   bullets.setAll('outOfBoundsKill', true);
-
-    Clash.ship = Clash.game.add.sprite(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "assets", "player1.png");
-    Clash.ship.anchor = new Phaser.Point(0.5, 0.5);
-    Clash.game.physics.enable(Clash.ship, Phaser.Physics.ARCADE);
+    Clash.players = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png");
 
     Clash.enemyGroup = Clash.game.add.physicsGroup();       //T Dương
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
@@ -115,11 +100,11 @@ var update = function () {
     //  ;
 
     // Clash.game.physics.arcade.moveToPointer(Clash.display.iconMouse, 10000);
+    Clash.players.sprite.rotation = Clash.game.physics.arcade.angleToPointer(Clash.players.sprite)+ Math.PI / 2;
 
-    Clash.ship.rotation = Clash.game.physics.arcade.angleToPointer(Clash.ship) + Math.PI / 2;
-    if (Clash.game.input.activePointer.isDown) {
-        fire();
-    }
+    // if (Clash.game.input.activePointer.isDown) {
+    //     fire();
+    // }
     // TDuong
     // Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
     // if (Clash.timeSinceLastSpawmEnemies>Clash.configs.spawmtime) {
@@ -172,4 +157,5 @@ var render = function () {
     Clash.game.debug.body(Clash.display.iconMouse);
     Clash.game.debug.spriteBounds(Clash.earth.sprite);
     Clash.game.debug.spriteBounds(Clash.display.iconEarth);
+    Clash.game.debug.spriteBounds(Clash.players.sprite);
 }
