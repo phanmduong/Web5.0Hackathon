@@ -20,10 +20,9 @@ class ShipController {
       }
     }
 
-    // var bullets ;
+     //Clash.bullets = this.createBullet(new Phaser.Point(0.5, 0.5));
     // var fireRate = 100;
     // var nextFire = 0;
-
     fire(){
       // if(!this.sprite.alive) return;
       // this.createBullet(Clash.game.pointer.direction);
@@ -35,8 +34,10 @@ class ShipController {
         //var bullet = bullets.getFirstDead();
         //
         // bullet.reset(sprite.x - 8, sprite.y - 8);
-        //
-        // game.physics.arcade.moveToPointer(bullet, 300);
+        //var bullet = new BulletControllerType1(this.sprite.position,this.sprite.direction);
+
+
+        //Clash.game.physics.arcade.moveToPointer(bullet, 300);
         this.createBullet(new Phaser.Point(0.5, 0.5));
       }
     }

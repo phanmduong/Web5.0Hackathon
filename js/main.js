@@ -124,7 +124,9 @@ var update = function () {
             new EnemyUfo1Small1(Clash.enemiesShipTempX, Clash.enemiesShipTempY)
           );
         }
-        else
+        else {
+          
+        }
         {
           Clash.enemies.push(
             new EnemyUfo1Big2(Clash.enemiesShipTempX, Clash.enemiesShipTempY)
@@ -134,29 +136,6 @@ var update = function () {
     }
 }
 
-// function fire() {
-//
-//
-//   if (Clash.game.time.now > nextFire && bullets.countDead() > 0)
-//     {
-//         nextFire = Clash.game.time.now + fireRate;
-//
-//         var bullet = bullets.getFirstDead();
-//
-//         Clash.game.physics.arcade.moveToPointer(bullet, 300);
-//     }
-//     //Clash.game.physics.arcade.moveToPointer(Clash.ship, 300);
-//
-//
-// }
-
-
-// function createBullet(direction) {
-//     new PlayerBulletType1Controller(
-//         Clash.game.input.pointer.position,
-//         direction
-//     );
-// }
 // before camera render (mostly for debug)
 var render = function () {
     Clash.game.debug.body(Clash.display.iconMouse);
