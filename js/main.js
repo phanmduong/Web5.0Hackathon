@@ -106,27 +106,30 @@ var update = function () {
     //     fire();
     // }
     // TDuong
-    // Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
-    // if (Clash.timeSinceLastSpawmEnemies>Clash.configs.spawmtime) {
-    //     Clash.enemiesShipTempX=Clash.game.world.randomX;
-    //     Clash.enemiesShipTempY=Clash.game.world.randomY;
-    //     while ( (Clash.enemiesShipTempX-Clash.game.height /2)*(Clash.enemiesShipTempX-Clash.game.height /2)+
-    //       (Clash.enemiesShipTempY-Clash.game.width /2)*(Clash.enemiesShipTempY-Clash.game.width /2) < 200*200 ){
-    //         Clash.enemiesShipTempX = Clash.game.world.randomX;
-    //         Clash.enemiesShipTempY = Clash.game.world.randomY;
-    //       }
-    //
-    //     Clash.enemies.push(
-    //       new EnemyController(
-    //         Clash.enemiesShipTempX,
-    //         Clash.enemiesShipTempY,
-    //         "ufo1-small1.png",
-    //         {
-    //           health    : 10
-    //         })
-    //     );
-    //     Clash.timeSinceLastSpawmEnemies = 0;
-    // }
+    Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
+    if (Clash.timeSinceLastSpawmEnemies>Clash.configs.spawmtime) {
+        // Random tọa độ tạo thuyền địch
+        Clash.enemiesShipTempX=Clash.game.world.randomX;
+        Clash.enemiesShipTempY=Clash.game.world.randomY;
+        while ( (Clash.enemiesShipTempX-Clash.game.height /2)*(Clash.enemiesShipTempX-Clash.game.height /2)+
+          (Clash.enemiesShipTempY-Clash.game.width /2)*(Clash.enemiesShipTempY-Clash.game.width /2) < 200*200 ){
+            Clash.enemiesShipTempX = Clash.game.world.randomX;
+            Clash.enemiesShipTempY = Clash.game.world.randomY;
+          }
+        //Lựa chọn loại thuyền địch
+        if ( (Clash.enemiesShipTempX+Clash.enemiesShipTempY)%2==1 ) {
+          Clash.enemies.push(
+            new EnemyUfo1Small1(Clash.enemiesShipTempX, Clash.enemiesShipTempY)
+          );
+        }
+        else
+        {
+          Clash.enemies.push(
+            new EnemyUfo1Big2(Clash.enemiesShipTempX, Clash.enemiesShipTempY)
+          );
+        }
+        Clash.timeSinceLastSpawmEnemies = 0;
+    }
 }
 
 function fire() {
