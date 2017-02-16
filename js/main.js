@@ -122,8 +122,13 @@ var collisionWithEarth = function (earth, actorSprite) {
 }
 
 var render = function () {
+    // Clash.enemyGroup.forEachAlive(renderGroup, this);
     Clash.game.debug.body(Clash.display.iconMouse);
     Clash.game.debug.body(Clash.earth.sprite);
     // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
     Clash.game.debug.body(Clash.player.sprite);
+}
+
+function renderGroup(member) {
+    Clash.game.debug.body(member);
 }
