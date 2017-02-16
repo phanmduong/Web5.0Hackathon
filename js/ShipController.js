@@ -16,7 +16,6 @@ class ShipController {
 
         Clash.game.physics.arcade.enableBody(this.sprite);
         console.log(this.sprite.width);
-        // this.sprite.scale.setTo(1.5, 1.5);
         console.log(this.sprite.width);
         this.sprite.body.setCircle(this.configs.radius, this.sprite.width / 2 - this.configs.radius,
             this.sprite.height / 2 - this.configs.radius);

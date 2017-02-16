@@ -43,18 +43,15 @@ var create = function () {
         health : 30
     });
 
-    //T.Hieu
     Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
         cooldown: 0.5,
         radius: 25,
         health : 20
     });
 
-    Clash.enemyGroup = Clash.game.add.physicsGroup();       //T Dương
+    Clash.enemyGroup = Clash.game.add.physicsGroup();
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
 
-
-    //Tạo tàu địch
     Clash.enemies = [];
     Clash.timeSinceLastSpawmEnemies = 0;
 
@@ -94,7 +91,7 @@ var createObjectDisplay = function (position, spriteName, isAnchor) {
 
 }
 
-// update game state each frame
+
 var update = function () {
 
     Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
@@ -115,8 +112,6 @@ var update = function () {
         Clash.timeSinceLastSpawmEnemies = 0;
     }
 }
-
-// before camera render (mostly for debug)
 
 var collisionBulletAndActor = function (bulletSprite, actorSprite) {
     bulletSprite.kill();

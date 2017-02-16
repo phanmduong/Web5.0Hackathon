@@ -1,6 +1,3 @@
-/**
- * Created by Ng T Duong on 2/14/2017.
- */
 class EnemyController {
     constructor(spriteName, configs) {
         this.distanceMinWithEarth = 400;

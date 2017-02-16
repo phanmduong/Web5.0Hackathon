@@ -9,8 +9,4 @@ class BulletControllerType1 extends BulletController {
             }
         );
     }
-
-    // update(){
-    //   Clash.game.physics.arcade.moveToPointer(displayObject, 60, pointer, 0);
-    // }
 }
