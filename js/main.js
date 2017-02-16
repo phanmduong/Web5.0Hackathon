@@ -94,7 +94,7 @@ var createObjectDisplay = function (position, spriteName, isAnchor) {
 var update = function () {
 
     Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
-    Clash.game.physics.arcade.overlap(Clash.earth, Clash.enemyGroup, collisionWithEarth);
+    Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithEarth, collisionWithEarth);
 
     Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
 
@@ -103,8 +103,8 @@ var update = function () {
     Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
     if (Clash.timeSinceLastSpawmEnemies > Clash.configs.spawntimeEnemy) {
 
-        Clash.enemies.push( new EnemyUfo1Small1());
-        Clash.enemies.push( new EnemyUfo1Big2());
+        Clash.enemies.push(new EnemyUfo1Small1());
+        Clash.enemies.push(new EnemyUfo1Big2());
 
         Clash.timeSinceLastSpawmEnemies = 0;
     }
@@ -122,7 +122,7 @@ var collisionWithEarth = function (earth, actorSprite) {
 }
 
 var render = function () {
-    // Clash.enemyGroup.forEachAlive(renderGroup, this);
+    Clash.enemyGroup.forEachAlive(renderGroup, this);
     Clash.game.debug.body(Clash.display.iconMouse);
     Clash.game.debug.body(Clash.earth.sprite);
     // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
