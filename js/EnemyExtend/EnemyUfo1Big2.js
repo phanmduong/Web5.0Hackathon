@@ -3,7 +3,7 @@ class EnemyUfo1Big2 extends EnemyController {
         super(
             "ufo1-big2.png",
             {
-                health: 20,
+                health: 2,
                 enemySpeed: 50,
                 radius: 26
             }

@@ -18,7 +18,7 @@
 },
 "clock1.png":
 {
-	"frame": {"x":456,"y":60,"w":32,"h":32},
+	"frame": {"x":456,"y":94,"w":32,"h":32},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
@@ -31,6 +31,14 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
 	"sourceSize": {"w":16,"h":32}
+},
+"frame0000.png":
+{
+	"frame": {"x":456,"y":60,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
 },
 "hp-detail.png":
 {
@@ -255,6 +263,6 @@
 	"format": "RGBA8888",
 	"size": {"w":512,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:101fa9f341be140ad3664a240931a08e:1/1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:b86b7ef8fb4b25ca8d5b7251180a09ec:1/1$"
 }
 }

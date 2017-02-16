@@ -40,23 +40,30 @@ var create = function () {
 
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
-        health : 30
+        health: 30
     });
+
+    Clash.playerBulletGroup = Clash.game.add.physicsGroup();
 
     Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
         cooldown: 0.5,
         radius: 25,
-        health : 20
+        health: 20,
+        shipSpeed: 700
     });
 
     Clash.enemyGroup = Clash.game.add.physicsGroup();
-    Clash.playerBulletGroup = Clash.game.add.physicsGroup();
+
 
     Clash.enemies = [];
     Clash.timeSinceLastSpawmEnemies = 0;
 
+    Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
+
     //Mọi công việc làm trước hàm này
     createDisplay();
+
+
 }
 
 var createDisplay = function () {
@@ -91,9 +98,8 @@ var createObjectDisplay = function (position, spriteName, isAnchor) {
 
 }
 
-
 var update = function () {
-
+    Clash.game.physics.arcade.collide(Clash.earth.sprite, Clash.player.sprite);
     Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
     Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithObject);
     Clash.game.physics.arcade.overlap(Clash.player.sprite, Clash.enemyGroup, collisionWithObject);
@@ -111,6 +117,8 @@ var update = function () {
 
         Clash.timeSinceLastSpawmEnemies = 0;
     }
+
+
 }
 
 var collisionBulletAndActor = function (bulletSprite, actorSprite) {
@@ -119,8 +127,8 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
 }
 
 var collisionWithObject = function (object, actorSprite) {
+    object.damage(actorSprite.health);
     actorSprite.kill();
-    object.damage(1);
 }
 
 var render = function () {
