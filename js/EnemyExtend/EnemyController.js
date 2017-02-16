@@ -14,6 +14,9 @@ class EnemyController {
 
         this.configs = configs;
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
+
+        this.sprite.body.setCircle(this.configs.radius, this.sprite.width / 2 - this.configs.radius,
+            this.sprite.height / 2 - this.configs.radius);
         this.sprite.health = this.configs.health;
         Clash.game.physics.arcade.moveToObject(this.sprite, Clash.earth.sprite, this.configs.enemySpeed);
     }

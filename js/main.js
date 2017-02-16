@@ -39,11 +39,15 @@ var create = function () {
     Clash.keyboard = Clash.game.input.keyboard;
 
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
-    Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png");
+    Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
+        health : 30
+    });
 
     //T.Hieu
     Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
-        cooldown: 0.5
+        cooldown: 0.5,
+        radius: 25,
+        health : 20
     });
 
     Clash.enemyGroup = Clash.game.add.physicsGroup();       //T Dương
@@ -94,11 +98,13 @@ var createObjectDisplay = function (position, spriteName, isAnchor) {
 var update = function () {
 
     Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
-    Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithEarth, collisionWithEarth);
+    Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithObject);
+    Clash.game.physics.arcade.overlap(Clash.player.sprite, Clash.enemyGroup, collisionWithObject);
 
     Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
 
     Clash.player.update();
+    Clash.earth.update();
 
     Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
     if (Clash.timeSinceLastSpawmEnemies > Clash.configs.spawntimeEnemy) {
@@ -117,16 +123,17 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
     actorSprite.kill();
 }
 
-var collisionWithEarth = function (earth, actorSprite) {
+var collisionWithObject = function (object, actorSprite) {
     actorSprite.kill();
+    object.damage(1);
 }
 
 var render = function () {
-    Clash.enemyGroup.forEachAlive(renderGroup, this);
-    Clash.game.debug.body(Clash.display.iconMouse);
-    Clash.game.debug.body(Clash.earth.sprite);
-    // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
-    Clash.game.debug.body(Clash.player.sprite);
+    // Clash.enemyGroup.forEachAlive(renderGroup, this);
+    // Clash.game.debug.body(Clash.display.iconMouse);
+    // Clash.game.debug.body(Clash.earth.sprite);
+    // // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
+    // Clash.game.debug.body(Clash.player.sprite);
 }
 
 function renderGroup(member) {
