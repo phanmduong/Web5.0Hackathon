@@ -1,11 +1,10 @@
 class EnemyUfo1Small1 extends EnemyController{
-  constructor(x, y){
+  constructor(){
     super(
-      x,
-      y,
       "ufo1-small1.png",
       {
-        health    : 10
+        health    : 10,
+          enemySpeed: 40
       }
     );
   }

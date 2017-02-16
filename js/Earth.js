@@ -11,7 +11,8 @@ class Earth {
         );
 
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
-        // this.sprite.body.setCircle(50, this.sprite.width / 2 - 50,
-        //     this.sprite.height / 2 - 50);
+        Clash.game.physics.arcade.enableBody(this.sprite);
+        this.sprite.body.setCircle(100, this.sprite.width / 2 - 100,
+            this.sprite.height / 2 - 100);
     }
 }

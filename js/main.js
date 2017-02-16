@@ -1,9 +1,6 @@
 var Clash = {};
 Clash.configs = {
-  spawmtime : 0.6,
-  bulletSpeed : 300,
-  nextFire : 0,
-  fireRate : 100
+    spawntimeEnemy: 0.6
 };
 Clash.display = {};
 
@@ -36,7 +33,6 @@ var preload = function () {
 }
 
 
-
 // initialize the games
 var create = function () {
     Clash.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -46,19 +42,20 @@ var create = function () {
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png");
 
     //T.Hieu
-    Clash.players = Clash.game.add.physicsGroup();
-    Clash.players = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png");
+    Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
+        cooldown: 0.5
+    });
 
     Clash.enemyGroup = Clash.game.add.physicsGroup();       //T Dương
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
-    //Mọi công việc làm trước hàm này
-    createDisplay();
+
 
     //Tạo tàu địch
     Clash.enemies = [];
     Clash.timeSinceLastSpawmEnemies = 0;
-    Clash.enemiesShipTempX = Clash.game.height /2;
-    Clash.enemiesShipTempY = Clash.game.width /2;
+
+    //Mọi công việc làm trước hàm này
+    createDisplay();
 }
 
 var createDisplay = function () {
@@ -95,51 +92,38 @@ var createObjectDisplay = function (position, spriteName, isAnchor) {
 
 // update game state each frame
 var update = function () {
-    // console.log(Clash.game.input.activePointer);
 
-    //  Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
-    //  ;
+    Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
+    Clash.game.physics.arcade.overlap(Clash.earth, Clash.enemyGroup, collisionWithEarth);
 
-    // Clash.game.physics.arcade.moveToPointer(Clash.display.iconMouse, 10000);
-    Clash.players.sprite.rotation = Clash.game.physics.arcade.angleToPointer(Clash.players.sprite)+ Math.PI / 2;
-    Clash.players.update();
+    Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
 
-    // if (Clash.game.input.activePointer.isDown) {
-    //     fire();
-    // }
-    // TDuong
+    Clash.player.update();
+
     Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
-    if (Clash.timeSinceLastSpawmEnemies>Clash.configs.spawmtime) {
-        // Random tọa độ tạo thuyền địch
-        Clash.enemiesShipTempX=Clash.game.world.randomX;
-        Clash.enemiesShipTempY=Clash.game.world.randomY;
-        while ( (Clash.enemiesShipTempX-Clash.game.height /2)*(Clash.enemiesShipTempX-Clash.game.height /2)+
-          (Clash.enemiesShipTempY-Clash.game.width /2)*(Clash.enemiesShipTempY-Clash.game.width /2) < 200*200 ){
-            Clash.enemiesShipTempX = Clash.game.world.randomX;
-            Clash.enemiesShipTempY = Clash.game.world.randomY;
-          }
-        //Lựa chọn loại thuyền địch
-        if ( (Clash.enemiesShipTempX+Clash.enemiesShipTempY)%2==1 ) {
-          Clash.enemies.push(
-            new EnemyUfo1Small1(Clash.enemiesShipTempX, Clash.enemiesShipTempY)
-          );
-        }
-        else {
-          
-        }
-        {
-          Clash.enemies.push(
-            new EnemyUfo1Big2(Clash.enemiesShipTempX, Clash.enemiesShipTempY)
-          );
-        }
+    if (Clash.timeSinceLastSpawmEnemies > Clash.configs.spawntimeEnemy) {
+
+        Clash.enemies.push( new EnemyUfo1Small1());
+        Clash.enemies.push( new EnemyUfo1Big2());
+
         Clash.timeSinceLastSpawmEnemies = 0;
     }
 }
 
 // before camera render (mostly for debug)
+
+var collisionBulletAndActor = function (bulletSprite, actorSprite) {
+    bulletSprite.kill();
+    actorSprite.kill();
+}
+
+var collisionWithEarth = function (earth, actorSprite) {
+    actorSprite.kill();
+}
+
 var render = function () {
     Clash.game.debug.body(Clash.display.iconMouse);
-    Clash.game.debug.spriteBounds(Clash.earth.sprite);
-    Clash.game.debug.spriteBounds(Clash.display.iconEarth);
-    Clash.game.debug.spriteBounds(Clash.players.sprite);
+    Clash.game.debug.body(Clash.earth.sprite);
+    // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
+    Clash.game.debug.body(Clash.player.sprite);
 }
