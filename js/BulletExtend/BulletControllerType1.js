@@ -4,7 +4,9 @@ class BulletControllerType1 extends BulletController {
             position,
             "cover-bullet.png",
             direction,
-            Clash.playerBulletGroup, {
+            Clash.playerBulletGroup,
+            'shotcannon',
+            {
                 bulletSpeed: 500
             }
         );

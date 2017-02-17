@@ -28,6 +28,8 @@ var preload = function () {
 
     Clash.game.load.atlasJSONHash('assets', 'Assets/assets.png', 'Assets/assets.json');
     Clash.game.load.image('background', 'Assets/background/space1.jpg');
+    Clash.game.load.audio('backgroundMusic', 'audio/background.mp3');
+    Clash.game.load.audio('shotcannon', 'audio/shot/shotcannon.wav');
 
 
 }
@@ -39,6 +41,11 @@ var create = function () {
     Clash.keyboard = Clash.game.input.keyboard;
 
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
+    Clash.backgroundMusic = Clash.game.add.audio('backgroundMusic');
+    Clash.backgroundMusic.volume = 20;
+    Clash.backgroundMusic.loopFull();
+
+
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
         health: 30
     });

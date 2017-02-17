@@ -1,5 +1,5 @@
 class BulletController {
-    constructor(position, spriteName, direction, physicsGroup, config) {
+    constructor(position, spriteName, direction, physicsGroup, nameMusic, config) {
         this.sprite = physicsGroup.create(
             position.x,
             position.y,
@@ -9,8 +9,12 @@ class BulletController {
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
         this.sprite.checkWorldBounds = true;
         this.sprite.outOfBoundsKill = true;
+
         this.sprite.rotation = Clash.game.physics.arcade.angleToPointer(this.sprite) + Math.PI / 2;
         Clash.game.physics.arcade.moveToPointer(this.sprite, config.bulletSpeed);
+
+        this.sprite.music = Clash.game.add.audio(nameMusic);
+        this.sprite.music.play();
 
 
     }
