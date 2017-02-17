@@ -61,6 +61,12 @@ var create = function () {
 
     Clash.enemyGroup = Clash.game.add.physicsGroup();
 
+    Clash.itemGroup = Clash.game.add.physicsGroup();
+    Clash.item = new ItemController(300,300,"frame0000.png",{
+      health : 1
+    })
+    Clash.eatItem = false;
+
 
     Clash.enemies = [];
     Clash.timeSinceLastSpawmEnemies = 0;
@@ -111,6 +117,8 @@ var update = function () {
     Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithObject);
     Clash.game.physics.arcade.overlap(Clash.player.sprite, Clash.enemyGroup, collisionWithObject);
 
+    Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.itemGroup, collisionBulletAndItem);
+
     Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
 
     Clash.player.update();
@@ -127,6 +135,13 @@ var update = function () {
 
 
 }
+
+var collisionBulletAndItem = function (bulletSprite, actorSprite) {
+    bulletSprite.kill();
+    actorSprite.kill();
+    Clash.eatItem = true;
+}
+
 
 var collisionBulletAndActor = function (bulletSprite, actorSprite) {
     bulletSprite.kill();

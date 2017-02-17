@@ -20,6 +20,7 @@ class ShipController {
     }
 
     update() {
+
         if (this.sprite.health <= 0) this.sprite.health = 0;
 
         Clash.display.shipHP.scale.setTo(this.sprite.health * 1.5 / this.configs.health, 1.5);
@@ -67,12 +68,25 @@ class ShipController {
     fire() {
         if (this.timeSinceLastFire > this.configs.cooldown) {
             this.timeSinceLastFire = 0;
-            this.createBullet(new Phaser.Point(0.5, 0.5));
+            if (Clash.eatItem == true){
+              this.createBullet2(new Phaser.Point(0.5, 0.5));
+            }
+              else {
+                this.createBullet1(new Phaser.Point(0.5, 0.5));
+              }
+            //this.createBullet(new Phaser.Point(0.5, 0.5));
         }
     }
 
-    createBullet(direction) {
+    createBullet1(direction) {
         new BulletControllerType1(
+            this.sprite.position,
+            direction
+        );
+    }
+
+    createBullet2(direction) {
+        new BulletControllerType2(
             this.sprite.position,
             direction
         );
