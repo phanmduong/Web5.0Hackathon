@@ -9,6 +9,9 @@ class BulletController {
 
         this.configs = config;
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
+
+        this.sprite.health = this.configs.bulletStrength;
+        this.sprite.bulletStrength = this.configs.bulletStrength;
     
         this.sprite.checkWorldBounds = true;
         this.sprite.outOfBoundsKill = true;

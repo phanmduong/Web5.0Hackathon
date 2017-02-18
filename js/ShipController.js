@@ -32,7 +32,25 @@ class ShipController {
     }
 
     update() {
-      
+        if ((Clash.itemNumberHadEaten >= 4 || Clash.itemNumberHadEaten == 1 ) || (this.timeSinceLastBulletPowerup < Clash.configs.timeBulletPowerup && this.timeSinceLastBulletPowerup != 0)) {
+            this.sprite.bulletType = 2;
+            this.timeSinceLastBulletPowerup += Clash.game.time.physicsElapsed;
+        }
+        if (Clash.itemNumberHadEaten >= 2 && Clash.itemNumberHadEaten < 4 && this.timeSinceLastBulletPowerup >= Clash.configs.timeBulletPowerup)
+            this.sprite.bulletType = 1;
+
+        if (Clash.itemNumberHadEaten >= 1 && Clash.itemNumberHadEaten < 4) {
+            Clash.display.progressPowerup.scale.setTo((Clash.configs.timeBulletPowerup - this.timeSinceLastBulletPowerup ) * 1.5 / Clash.configs.timeBulletPowerup, 1.5);
+            if (this.timeSinceLastBulletPowerup >= Clash.configs.timeBulletPowerup) {
+                this.sprite.bulletType = 1;
+                // this.timeSinceLastBulletPowerup = 0;
+                Clash.display.iconPowerup.kill();
+                Clash.display.progressPowerup.kill();
+
+            }
+        }
+
+
         this.playerRevival();
 
         if (this.sprite.health <= 0) this.sprite.health = 0;
@@ -50,11 +68,7 @@ class ShipController {
             this.fire();
         }
         //powerUp bullet
-        this.timeSinceLastBulletPowerup += Clash.game.time.physicsElapsed;
-        if (this.timeSinceLastBulletPowerup >= Clash.configs.timeBulletPowerup) {
-            this.timeSinceLastBulletPowerup = 0;
-            this.sprite.bulletType = 1;
-        }
+
     }
 
     playerRevival() {
@@ -108,7 +122,6 @@ class ShipController {
 
     fire() {
         if (this.timeSinceLastFire > this.configs.cooldown) {
-
             this.timeSinceLastFire = 0;
             switch (this.sprite.bulletType) {
                 case 1:
@@ -119,9 +132,8 @@ class ShipController {
                     break;
                 default:
                     break;
-                  }
 
-
+            }
         }
     }
 

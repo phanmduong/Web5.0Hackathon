@@ -1,8 +1,10 @@
 var Clash = {};
 Clash.configs = {
     spawntimeEnemy: 4,
+    spawntimeItem: 5,
     timePlayerRevival: 2,
-    timeBulletPowerup: 60,
+    timeBulletPowerup: 20,
+    maxItemPowerup: 4
 };
 Clash.display = {};
 
@@ -35,7 +37,7 @@ var preload = function () {
     Clash.game.load.image('background2', 'Assets/background/background2.png');
     Clash.game.load.audio('backgroundMusic', 'audio/background.mp3');
     Clash.game.load.audio('shotcannon', 'audio/shot/shotcannon.wav');
-    Clash.game.load.spritesheet('button', 'assets/playgame.png', 300, 54);
+    Clash.game.load.spritesheet('button', 'assets/playgame.png', 511, 108);
     Clash.game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
 
 
@@ -55,11 +57,11 @@ var create = function () {
     Clash.backgroundMusic.loopFull();
 
     Clash.isPlaygame = false;
-    Clash.playgame = Clash.game.add.button(Clash.game.height / 2, 800 , 'button', clickPlaygame, this, 1, 0);
+    Clash.playgame = Clash.game.add.button(Clash.game.height / 2, 800, 'button', clickPlaygame, this, 1, 0);
     Clash.playgame.anchor = new Phaser.Point(0.5, 0.5);
 
     Clash.killAllObject = killAllObject;
-    Clash.stateText = Clash.game.add.text(500,300,' ', { font: '84px Arial', fill: '#fff' });
+    Clash.stateText = Clash.game.add.text(500, 300, ' ', {font: '84px Arial', fill: '#fff'});
     Clash.stateText.anchor.setTo(0.5, 0.5);
     Clash.stateText.visible = false;
 
@@ -77,10 +79,9 @@ var clickPlaygame = function () {
 
 
 var createGame = function () {
-    Clash.background2.destroy();
 
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
-        health: 10
+        health: 50
     });
 
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
@@ -95,15 +96,13 @@ var createGame = function () {
     Clash.enemyGroup = Clash.game.add.physicsGroup();
 
     Clash.itemGroup = Clash.game.add.physicsGroup();
-    Clash.item = new ItemController("frame0000.png", {
-        health: 1,
-        type: 2
-    })
+
     Clash.itemExist = true;
     Clash.itemNumberHadEaten = 0;
 
     Clash.enemies = [];
-    Clash.timeSinceLastSpawmEnemies = 5;
+    Clash.timeSinceLastSpawmEnemies = Clash.configs.spawntimeEnemy + 1;
+    Clash.timeSinceLastItem = Clash.configs.spawntimeItem + 1;
     Clash.enemiesKilled = 0;
 
 
@@ -114,16 +113,25 @@ var createGame = function () {
     Clash.explosions.forEach(setupInvader, this);
 
 
-
     //Mọi công việc làm trước hàm này
     createDisplay();
 
 }
 
 var createDisplay = function () {
+    Clash.background2.destroy();
+
+    Clash.display.progressPowerup = createObjectDisplay({x: 152, y: 88}, "imageProgressbar.png", false);
+    Clash.display.iconPowerup = createObjectDisplay({x: 250, y: 100}, "timeProgress.png", true);
+
+    Clash.display.iconPowerup.kill();
+    Clash.display.progressPowerup.kill();
+
     Clash.display.weapon = createObjectDisplay({x: 70, y: 70}, "cannon1.jpg", true);
     Clash.display.frameWeapon = createObjectDisplay({x: 70, y: 70}, "weapon.png", true);
     Clash.display.frameWeapon.scale.setTo(1.6, 1.6);
+
+
     Clash.display.earthHP = createObjectDisplay({x: 130, y: 177}, "hp-earth.png", false);
     Clash.display.shipHP = createObjectDisplay({x: 130, y: 266}, "hp-ship.png", false);
     Clash.display.earthXP = createObjectDisplay({x: 125, y: 215}, "xp-earth.png", false);
@@ -175,39 +183,58 @@ var update = function () {
 
             Clash.timeSinceLastSpawmEnemies = 0;
         }
+
+        Clash.timeSinceLastItem += Clash.game.time.physicsElapsed;
+
+        if (Clash.timeSinceLastItem >= Clash.configs.spawntimeItem && Clash.itemNumberHadEaten < Clash.configs.maxItemPowerup){
+            new ItemController("frame0000.png",{
+                health: 1,
+                type: 2
+            });
+            Clash.timeSinceLastItem = 0;
+        }
     }
 
 }
 
 var collisionBulletAndItem = function (bulletSprite, actorSprite) {
-  var explosion = Clash.explosions.getFirstExists(false);
-   explosion.reset(actorSprite.body.x+45, actorSprite.body.y+45);
-   explosion.play('kaboom', 30, false, true);
-    bulletSprite.kill();
+    var explosion = Clash.explosions.getFirstExists(false);
+    explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
+    explosion.play('kaboom', 30, false, true);
+    bulletSprite.damage(1);
     actorSprite.kill();
-    Clash.itemExist = false;
-    Clash.timeSinceLastItem = 0;
     Clash.itemNumberHadEaten++;
-    Clash.player.sprite.bulletType = actorSprite.type;
+    if (Clash.itemNumberHadEaten >= Clash.configs.maxItemPowerup) {
+        Clash.player.sprite.bulletType = 2;
+        Clash.display.iconPowerup.kill();
+        Clash.display.progressPowerup.kill();
+    }
+
+    if (Clash.itemNumberHadEaten == 1) {
+        Clash.display.progressPowerup = createObjectDisplay({x: 152, y: 88}, "imageProgressbar.png", false);
+        Clash.display.iconPowerup = createObjectDisplay({x: 250, y: 100}, "timeProgress.png", true);
+    }
 }
 
 
 var collisionBulletAndActor = function (bulletSprite, actorSprite) {
-  var explosion = Clash.explosions.getFirstExists(false);
-   explosion.reset(actorSprite.body.x+45, actorSprite.body.y+45);
-   explosion.play('kaboom', 30, false, true);
+    var explosion = Clash.explosions.getFirstExists(false);
+    explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
+    explosion.play('kaboom', 30, false, true);
     if (!bulletSprite.transparency)
         bulletSprite.kill();
+    var actorSpriteHealth = actorSprite.health;
     actorSprite.damage(
-
+        bulletSprite.bulletStrength
     );
+    bulletSprite.damage(actorSpriteHealth);
     Clash.enemiesKilled++;
 }
 
 var collisionWithObject = function (object, actorSprite) {
-  var explosion = Clash.explosions.getFirstExists(false);
-   explosion.reset(actorSprite.body.x+45, actorSprite.body.y+45);
-   explosion.play('kaboom', 30, false, true);
+    var explosion = Clash.explosions.getFirstExists(false);
+    explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
+    explosion.play('kaboom', 30, false, true);
 
     object.damage(actorSprite.health);
     actorSprite.kill();
@@ -232,8 +259,8 @@ var killAllObject = function () {
     killObject(Clash.display.weapon);
     killObject(Clash.display.iconShip);
     killObject(Clash.display.iconMouse);
-    Clash.background2.this.destroy();
-
+    killObject(Clash.display.iconPowerup);
+    killObject(Clash.display.progressPowerup);
 }
 
 var killObject = function (object) {
@@ -247,9 +274,9 @@ var render = function () {
     // Clash.game.debug.body(Clash.earth.sprite);
     // // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
     // Clash.game.debug.body(Clash.player.sprite);
-    Clash.game.debug.text('Elapsed seconds: ' + Clash.game.time.totalElapsedSeconds(), 32, 32);
+    // Clash.game.debug.text('Elapsed seconds: ' + Clash.game.time.totalElapsedSeconds(), 32, 32);
 }
-function setupInvader (invader) {
+function setupInvader(invader) {
 
     invader.anchor.x = 0.5;
     invader.anchor.y = 0.5;

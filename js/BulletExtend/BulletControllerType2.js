@@ -10,7 +10,8 @@ class BulletControllerType2 extends BulletController {
                 imageWeapon: 'cannon2.jpg',
                 nameMusic: 'shotcannon',
                 radius: 20,
-                transparency: true
+                transparency: true,
+                bulletStrength: 100
             }
         );
     }

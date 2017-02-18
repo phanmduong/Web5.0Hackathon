@@ -26,17 +26,4 @@ class ItemController {
                     (this.y - Clash.game.width / 2) * (this.y - Clash.game.width / 2)) >= this.distanceMinWithEarth) break;
         } while (true);
     }
-
-    update(){
-      if (Clash.itemExist == false) {
-        Clash.timeSinceLastItem += Clash.game.time.physicsElapsed;
-        if (Clash.timeSinceLastItem > 30) {
-          Clash.itemExist = true;
-          Clash.item = new ItemController("frame0000.png", {
-              health: 1,
-              type: 2
-          })
-        }
-      }
-    }
 }
