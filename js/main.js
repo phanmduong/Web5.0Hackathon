@@ -48,7 +48,7 @@ var create = function () {
 
 
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
-        health: 100
+        health: 50
     });
 
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
@@ -56,7 +56,7 @@ var create = function () {
     Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
         cooldown: 0.5,
         radius: 34,
-        health: 5,
+        health: 20,
         shipSpeed: 1000
     });
 
@@ -157,12 +157,12 @@ var collisionWithObject = function (object, actorSprite) {
 }
 
 var render = function () {
-    Clash.enemyGroup.forEachAlive(renderGroup, this);
-    Clash.playerBulletGroup.forEachAlive(renderGroup, this);
-    Clash.game.debug.body(Clash.display.iconMouse);
-    Clash.game.debug.body(Clash.earth.sprite);
-    // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
-    Clash.game.debug.body(Clash.player.sprite);
+    // Clash.enemyGroup.forEachAlive(renderGroup, this);
+    // Clash.playerBulletGroup.forEachAlive(renderGroup, this);
+    // Clash.game.debug.body(Clash.display.iconMouse);
+    // Clash.game.debug.body(Clash.earth.sprite);
+    // // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
+    // Clash.game.debug.body(Clash.player.sprite);
 }
 
 function renderGroup(member) {
