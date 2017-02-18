@@ -7,8 +7,7 @@ class BulletControllerType2 extends BulletController {
             Clash.playerBulletGroup,
             {
                 bulletSpeed: 1000,
-                imageWeapon: 'cannon2.jpg',
-                nameMusic: 'shotcannon',
+                nameMusic: 'shotrocket',
                 radius: 20,
                 transparency: true,
                 bulletStrength: 100

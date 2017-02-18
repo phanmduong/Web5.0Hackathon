@@ -32,24 +32,30 @@ class ShipController {
     }
 
     update() {
-        if ((Clash.itemNumberHadEaten >= 4 || Clash.itemNumberHadEaten == 1 ) || (this.timeSinceLastBulletPowerup < Clash.configs.timeBulletPowerup && this.timeSinceLastBulletPowerup != 0)) {
-            this.sprite.bulletType = 2;
-            this.timeSinceLastBulletPowerup += Clash.game.time.physicsElapsed;
-        }
-        if (Clash.itemNumberHadEaten >= 2 && Clash.itemNumberHadEaten < 4 && this.timeSinceLastBulletPowerup >= Clash.configs.timeBulletPowerup)
-            this.sprite.bulletType = 1;
 
-        if (Clash.itemNumberHadEaten >= 1 && Clash.itemNumberHadEaten < 4) {
+        if (Clash.itemNumberHadEaten < Clash.configs.maxItemPowerup) {
+            this.timeSinceLastBulletPowerup += Clash.game.time.physicsElapsed;
             Clash.display.progressPowerup.scale.setTo((Clash.configs.timeBulletPowerup - this.timeSinceLastBulletPowerup ) * 1.5 / Clash.configs.timeBulletPowerup, 1.5);
             if (this.timeSinceLastBulletPowerup >= Clash.configs.timeBulletPowerup) {
                 this.sprite.bulletType = 1;
-                // this.timeSinceLastBulletPowerup = 0;
+                this.timeSinceLastBulletPowerup = 0;
                 Clash.display.iconPowerup.kill();
                 Clash.display.progressPowerup.kill();
-
             }
+        } else {
+            this.sprite.bulletType = 2;
+            Clash.display.iconPowerup.kill();
+            Clash.display.progressPowerup.kill();
         }
 
+        switch (this.sprite.bulletType){
+            case 1:
+                Clash.display.weapon.frameName = 'cannon1.jpg';
+                break;
+            case 2:
+                Clash.display.weapon.frameName = 'rocket2.jpg';
+                break;
+        }
 
         this.playerRevival();
 

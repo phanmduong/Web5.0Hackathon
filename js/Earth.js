@@ -25,10 +25,9 @@ class Earth {
 
     update() {
         if (this.sprite.health <= 0) {this.sprite.health = 0;
-          Clash.playgame.reset(Clash.game.height / 2, Clash.game.width / 2);
+          Clash.playgame.reset(Clash.game.height / 2, 800);
           Clash.isPlaygame = false;
-          Clash.killAllObject();
-          Clash.stateText.text = " Game over";
+          Clash.stateText.text = "Game over";
           Clash.stateText.visible = true;
         }
         Clash.display.earthHP.scale.setTo(this.sprite.health * 1.5 / this.configs.health, 1.5);

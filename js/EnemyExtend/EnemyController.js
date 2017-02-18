@@ -15,6 +15,7 @@ class EnemyController {
         this.sprite.body.setCircle(this.configs.radius, this.sprite.width / 2 - this.configs.radius,
             this.sprite.height / 2 - this.configs.radius);
         this.sprite.health = this.configs.health;
+        this.sprite.score = this.configs.score;
         Clash.game.physics.arcade.moveToObject(this.sprite, Clash.earth.sprite, this.configs.enemySpeed);
         this.sprite.scale.setTo(1.5, 1.5);
     }
