@@ -10,7 +10,7 @@
 },
 "blastwave-blue-small.png":
 {
-	"frame": {"x":848,"y":2,"w":64,"h":64},
+	"frame": {"x":718,"y":266,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -74,7 +74,7 @@
 },
 "cannon1.jpg":
 {
-	"frame": {"x":784,"y":68,"w":64,"h":64},
+	"frame": {"x":848,"y":2,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -82,7 +82,7 @@
 },
 "cannon2.jpg":
 {
-	"frame": {"x":734,"y":134,"w":64,"h":64},
+	"frame": {"x":784,"y":68,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -111,6 +111,14 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
 	"sourceSize": {"w":32,"h":32}
+},
+"frame0001.png":
+{
+	"frame": {"x":734,"y":134,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+	"sourceSize": {"w":64,"h":64}
 },
 "hp-detail.png":
 {
@@ -391,6 +399,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:e3e3b426a60adf0ff37d2e6771c51842:1/1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:9948f6aa73613a327051e20b957b3221:1/1$"
 }
 }

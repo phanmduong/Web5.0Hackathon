@@ -3,7 +3,7 @@ Clash.configs = {
     spawntimeEnemy: 4,
     spawntimeItem: 5,
     timePlayerRevival: 2,
-    timeBulletPowerup: 20,
+    timeBulletPowerup: 10,
     maxItemPowerup: 4
 };
 Clash.display = {};
