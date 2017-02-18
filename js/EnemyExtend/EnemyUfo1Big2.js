@@ -5,7 +5,7 @@ class EnemyUfo1Big2 extends EnemyController {
             {
                 health: 2,
                 enemySpeed: 50,
-                radius: 26
+                radius: 40
             }
         );
     }

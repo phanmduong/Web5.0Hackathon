@@ -2,13 +2,14 @@ class BulletControllerType2 extends BulletController {
     constructor(position, direction) {
         super(
             position,
-            "clock1.png",
+            "rocket2.png",
             direction,
             Clash.playerBulletGroup,
             {
-                bulletSpeed: 800,
+                bulletSpeed: 200,
                 imageWeapon: 'cannon2.jpg',
-                nameMusic: 'shotcannon'
+                nameMusic: 'shotcannon',
+                radius: 20,
             }
         );
     }

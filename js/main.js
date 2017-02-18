@@ -1,7 +1,7 @@
 var Clash = {};
 Clash.configs = {
     spawntimeEnemy: 0.6,
-    timePlayerRevival: 2
+    timePlayerRevival: 2,
 };
 Clash.display = {};
 
@@ -55,7 +55,7 @@ var create = function () {
 
     Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
         cooldown: 0.5,
-        radius: 25,
+        radius: 34,
         health: 5,
         shipSpeed: 1000
     });
@@ -155,11 +155,12 @@ var collisionWithObject = function (object, actorSprite) {
 }
 
 var render = function () {
-    // Clash.enemyGroup.forEachAlive(renderGroup, this);
-    // Clash.game.debug.body(Clash.display.iconMouse);
-    // Clash.game.debug.body(Clash.earth.sprite);
-    // // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
-    // Clash.game.debug.body(Clash.player.sprite);
+    Clash.enemyGroup.forEachAlive(renderGroup, this);
+    Clash.playerBulletGroup.forEachAlive(renderGroup, this);
+    Clash.game.debug.body(Clash.display.iconMouse);
+    Clash.game.debug.body(Clash.earth.sprite);
+    // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
+    Clash.game.debug.body(Clash.player.sprite);
 }
 
 function renderGroup(member) {

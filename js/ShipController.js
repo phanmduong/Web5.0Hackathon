@@ -19,10 +19,14 @@ class ShipController {
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
 
         this.timeSinceLastRevival = 0;
+        this.timeSinceBlastware = 0;
+        this.isBlastware = false;
+
 
         Clash.game.physics.arcade.enableBody(this.sprite);
         this.sprite.body.setCircle(this.configs.radius, this.sprite.width / 2 - this.configs.radius,
             this.sprite.height / 2 - this.configs.radius);
+        this.sprite.scale.setTo(1.5, 1.5);
     }
 
     update() {

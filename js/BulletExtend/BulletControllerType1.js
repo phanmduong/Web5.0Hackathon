@@ -6,9 +6,10 @@ class BulletControllerType1 extends BulletController {
             direction,
             Clash.playerBulletGroup,
             {
-                bulletSpeed: 500,
+                bulletSpeed: 200,
                 imageWeapon: 'cannon1.jpg',
-                nameMusic: 'shotcannon'
+                nameMusic: 'shotcannon',
+                radius: 13,
             }
         );
     }
