@@ -32,9 +32,11 @@ var preload = function () {
 
     Clash.game.load.atlasJSONHash('assets', 'Assets/assets.png', 'Assets/assets.json');
     Clash.game.load.image('background', 'Assets/background/space1.jpg');
+    Clash.game.load.image('background2', 'Assets/background/background2.png');
     Clash.game.load.audio('backgroundMusic', 'audio/background.mp3');
     Clash.game.load.audio('shotcannon', 'audio/shot/shotcannon.wav');
     Clash.game.load.spritesheet('button', 'assets/playgame.png', 300, 54);
+    Clash.game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
 
 
 }
@@ -47,12 +49,13 @@ var create = function () {
 
 
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
+    Clash.background2 = Clash.game.add.tileSprite(400, 250, 256, 256, 'background2');
     Clash.backgroundMusic = Clash.game.add.audio('backgroundMusic');
     Clash.backgroundMusic.volume = 5;
     Clash.backgroundMusic.loopFull();
 
     Clash.isPlaygame = false;
-    Clash.playgame = Clash.game.add.button(Clash.game.height / 2, Clash.game.width / 2, 'button', clickPlaygame, this, 1, 0);
+    Clash.playgame = Clash.game.add.button(Clash.game.height / 2, 800 , 'button', clickPlaygame, this, 1, 0);
     Clash.playgame.anchor = new Phaser.Point(0.5, 0.5);
 
     Clash.killAllObject = killAllObject;
@@ -74,8 +77,9 @@ var clickPlaygame = function () {
 
 
 var createGame = function () {
+
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
-        health: 50
+        health: 10
     });
 
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
@@ -103,6 +107,10 @@ var createGame = function () {
 
 
     Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
+
+    Clash.explosions = Clash.game.add.group();
+    Clash.explosions.createMultiple(30, 'kaboom');
+    Clash.explosions.forEach(setupInvader, this);
 
 
 
@@ -171,6 +179,9 @@ var update = function () {
 }
 
 var collisionBulletAndItem = function (bulletSprite, actorSprite) {
+  var explosion = Clash.explosions.getFirstExists(false);
+   explosion.reset(actorSprite.body.x+45, actorSprite.body.y+45);
+   explosion.play('kaboom', 30, false, true);
     bulletSprite.kill();
     actorSprite.kill();
     Clash.itemExist = false;
@@ -181,7 +192,9 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
 
 
 var collisionBulletAndActor = function (bulletSprite, actorSprite) {
-
+  var explosion = Clash.explosions.getFirstExists(false);
+   explosion.reset(actorSprite.body.x+45, actorSprite.body.y+45);
+   explosion.play('kaboom', 30, false, true);
     if (!bulletSprite.transparency)
         bulletSprite.kill();
     actorSprite.damage(
@@ -191,8 +204,13 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
 }
 
 var collisionWithObject = function (object, actorSprite) {
+  var explosion = Clash.explosions.getFirstExists(false);
+   explosion.reset(actorSprite.body.x+45, actorSprite.body.y+45);
+   explosion.play('kaboom', 30, false, true);
+
     object.damage(actorSprite.health);
     actorSprite.kill();
+
 }
 
 var killAllObject = function () {
@@ -227,8 +245,15 @@ var render = function () {
     // Clash.game.debug.body(Clash.earth.sprite);
     // // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
     // Clash.game.debug.body(Clash.player.sprite);
+    Clash.game.debug.text('Elapsed seconds: ' + Clash.game.time.totalElapsedSeconds(), 32, 32);
 }
+function setupInvader (invader) {
 
+    invader.anchor.x = 0.5;
+    invader.anchor.y = 0.5;
+    invader.animations.add('kaboom');
+
+}
 function renderGroup(member) {
     Clash.game.debug.body(member);
 }

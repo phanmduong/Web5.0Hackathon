@@ -32,7 +32,7 @@ class ShipController {
     }
 
     update() {
-
+      
         this.playerRevival();
 
         if (this.sprite.health <= 0) this.sprite.health = 0;
@@ -108,6 +108,7 @@ class ShipController {
 
     fire() {
         if (this.timeSinceLastFire > this.configs.cooldown) {
+
             this.timeSinceLastFire = 0;
             switch (this.sprite.bulletType) {
                 case 1:
@@ -118,8 +119,9 @@ class ShipController {
                     break;
                 default:
                     break;
+                  }
 
-            }
+
         }
     }
 
