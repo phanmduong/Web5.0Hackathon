@@ -88,6 +88,8 @@ var createGame = function () {
         health: 1,
         type: 2
     })
+    Clash.itemExist = true;
+    Clash.itemNumberHadEaten = 0;
 
     Clash.enemies = [];
     Clash.timeSinceLastSpawmEnemies = 5;
@@ -161,6 +163,9 @@ var update = function () {
 var collisionBulletAndItem = function (bulletSprite, actorSprite) {
     bulletSprite.kill();
     actorSprite.kill();
+    Clash.itemExist = false;
+    Clash.timeSinceLastItem = 0;
+    Clash.itemNumberHadEaten++;
     Clash.player.sprite.bulletType = actorSprite.type;
 }
 
@@ -169,7 +174,9 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
 
     if (!bulletSprite.transparency)
         bulletSprite.kill();
-    actorSprite.kill();
+    actorSprite.damage(
+
+    );
     Clash.enemiesKilled++;
 }
 
