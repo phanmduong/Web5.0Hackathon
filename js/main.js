@@ -1,6 +1,6 @@
 var Clash = {};
 Clash.configs = {
-    spawntimeEnemy: 0.6,
+    spawntimeEnemy: 4,
     timePlayerRevival: 2,
     timeBulletPowerup: 60,
 };
@@ -71,7 +71,8 @@ var create = function () {
     })
 
     Clash.enemies = [];
-    Clash.timeSinceLastSpawmEnemies = 0;
+    Clash.timeSinceLastSpawmEnemies = 5;
+    Clash.enemiesKilled = 0;
 
     Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
     Clash.game.input.mouse.enabled = true;
@@ -126,7 +127,7 @@ var update = function () {
     Clash.earth.update();
 
     Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
-    if (Clash.timeSinceLastSpawmEnemies > Clash.configs.spawntimeEnemy) {
+    if (Clash.timeSinceLastSpawmEnemies > 0.43+(Clash.configs.spawntimeEnemy/(Clash.enemiesKilled/10+1)) ) {
 
         Clash.enemies.push(new EnemyUfo1Small1());
         Clash.enemies.push(new EnemyUfo1Big2());
@@ -149,6 +150,7 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
     if (!bulletSprite.transparency)
         bulletSprite.kill();
     actorSprite.kill();
+    Clash.enemiesKilled++;
 }
 
 var collisionWithObject = function (object, actorSprite) {

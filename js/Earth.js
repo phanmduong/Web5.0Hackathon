@@ -8,7 +8,7 @@ class Earth {
             y,
             "assets",
             spriteName
-        );
+        ); 
 
         this.configs = configs;
         this.sprite.health = this.configs.health;
