@@ -1,6 +1,7 @@
 var Clash = {};
 Clash.configs = {
-    spawntimeEnemy: 0.6
+    spawntimeEnemy: 0.6,
+    timePlayerRevival: 2
 };
 Clash.display = {};
 
@@ -42,12 +43,12 @@ var create = function () {
 
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
     Clash.backgroundMusic = Clash.game.add.audio('backgroundMusic');
-    Clash.backgroundMusic.volume = 20;
+    Clash.backgroundMusic.volume = 5;
     Clash.backgroundMusic.loopFull();
 
 
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
-        health: 30
+        health: 100
     });
 
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
@@ -55,14 +56,14 @@ var create = function () {
     Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
         cooldown: 0.5,
         radius: 25,
-        health: 20,
-        shipSpeed: 700
+        health: 5,
+        shipSpeed: 1000
     });
 
     Clash.enemyGroup = Clash.game.add.physicsGroup();
 
     Clash.itemGroup = Clash.game.add.physicsGroup();
-    Clash.item = new ItemController(300,300,"frame0000.png",{
+    Clash.item = new ItemController("frame0000.png",{
       health : 1
     })
     Clash.eatItem = false;

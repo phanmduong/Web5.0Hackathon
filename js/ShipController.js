@@ -6,6 +6,10 @@ class ShipController {
             "assets",
             spriteName
         );
+
+        this.x = x;
+        this.y = y;
+
         this.configs = configs;
 
         this.timeSinceLastFire = 0;
@@ -14,12 +18,16 @@ class ShipController {
 
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
 
+        this.timeSinceLastRevival = 0;
+
         Clash.game.physics.arcade.enableBody(this.sprite);
         this.sprite.body.setCircle(this.configs.radius, this.sprite.width / 2 - this.configs.radius,
             this.sprite.height / 2 - this.configs.radius);
     }
 
     update() {
+
+        this.playerRevival();
 
         if (this.sprite.health <= 0) this.sprite.health = 0;
 
@@ -34,6 +42,17 @@ class ShipController {
 
         if (Clash.game.input.activePointer.isDown) {
             this.fire();
+        }
+    }
+
+    playerRevival() {
+        if (this.sprite.alive) {
+            this.timeSinceLastRevival = 0;
+        } else {
+            this.timeSinceLastRevival += Clash.game.time.physicsElapsed;
+            if (this.timeSinceLastRevival >= Clash.configs.timePlayerRevival) {
+                this.sprite.reset(this.x, this.y, this.configs.health);
+            }
         }
     }
 
@@ -53,14 +72,24 @@ class ShipController {
 
         var x2 = Math.sqrt(t) + xCenter;
         var y2 = (yPointer - yCenter) * (x2 - xCenter) / (xPointer - xCenter) + yCenter;
+        // console.log("x1 =" + x1 +" y1 =" + y1);
+        // console.log("x2 =" + x2 +" y2 =" + y2);
 
         var t1 = (Math.pow(xPointer - x1, 2) + Math.pow(yPointer - y1, 2));
         var t2 = (Math.pow(xPointer - x2, 2) + Math.pow(yPointer - y2, 2));
 
         if (t1 <= t2) {
-            Clash.game.physics.arcade.moveToXY(this.sprite, x1, y1, this.configs.shipSpeed);
+            if (!isNaN(x1) && !isNaN(y1)) {
+                this.x = x1;
+                this.y = y1;
+                Clash.game.physics.arcade.moveToXY(this.sprite, x1, y1, this.configs.shipSpeed);
+            }
         } else {
-            Clash.game.physics.arcade.moveToXY(this.sprite, x2, y2, this.configs.shipSpeed);
+            if (!isNaN(x2) && !isNaN(y2)) {
+                this.x = x2;
+                this.y = y2;
+                Clash.game.physics.arcade.moveToXY(this.sprite, x2, y2, this.configs.shipSpeed);
+            }
         }
     }
 
@@ -68,12 +97,12 @@ class ShipController {
     fire() {
         if (this.timeSinceLastFire > this.configs.cooldown) {
             this.timeSinceLastFire = 0;
-            if (Clash.eatItem == true){
-              this.createBullet2(new Phaser.Point(0.5, 0.5));
+            if (Clash.eatItem == true) {
+                this.createBullet2(new Phaser.Point(0.5, 0.5));
             }
-              else {
+            else {
                 this.createBullet1(new Phaser.Point(0.5, 0.5));
-              }
+            }
             //this.createBullet(new Phaser.Point(0.5, 0.5));
         }
     }
