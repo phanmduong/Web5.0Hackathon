@@ -69,7 +69,7 @@ var clickPlaygame = function () {
 
 var createGame = function () {
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
-        health: 1
+        health: 50
     });
 
     Clash.playerBulletGroup = Clash.game.add.physicsGroup();
