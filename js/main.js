@@ -20,6 +20,7 @@ window.onload = function () {
 
 // preparations before game starts
 var preload = function () {
+
     Clash.game.scale.minWidth = 512;
     Clash.game.scale.minHeight = 512;
     Clash.game.scale.maxWidth = 1024;
@@ -45,58 +46,58 @@ var create = function () {
     Clash.keyboard = Clash.game.input.keyboard;
 
 
-
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
     Clash.backgroundMusic = Clash.game.add.audio('backgroundMusic');
     Clash.backgroundMusic.volume = 5;
     Clash.backgroundMusic.loopFull();
 
     Clash.isPlaygame = false;
-    Clash.playgame = Clash.game.add.button(Clash.game.height / 2, Clash.game.width / 2, 'button', clickPlaygame, this, 1,0);
+    Clash.playgame = Clash.game.add.button(Clash.game.height / 2, Clash.game.width / 2, 'button', clickPlaygame, this, 1, 0);
     Clash.playgame.anchor = new Phaser.Point(0.5, 0.5);
 
+    Clash.killAllObject = killAllObject;
 
 }
 
 
-var clickPlaygame = function(){
-  createGame();
+var clickPlaygame = function () {
+    createGame();
     Clash.isPlaygame = true;
     Clash.playgame.kill();
 
 }
 
-var createGame = function(){
-  Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
-      health: 1
-  });
+var createGame = function () {
+    Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
+        health: 1
+    });
 
-  Clash.playerBulletGroup = Clash.game.add.physicsGroup();
+    Clash.playerBulletGroup = Clash.game.add.physicsGroup();
 
-  Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
-      cooldown: 0.5,
-      radius: 34,
-      health: 20,
-      shipSpeed: 1000
-  });
+    Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
+        cooldown: 0.5,
+        radius: 34,
+        health: 20,
+        shipSpeed: 1000
+    });
 
-  Clash.enemyGroup = Clash.game.add.physicsGroup();
+    Clash.enemyGroup = Clash.game.add.physicsGroup();
 
-  Clash.itemGroup = Clash.game.add.physicsGroup();
-  Clash.item = new ItemController("frame0000.png", {
-      health: 1,
-      type: 2
-  })
+    Clash.itemGroup = Clash.game.add.physicsGroup();
+    Clash.item = new ItemController("frame0000.png", {
+        health: 1,
+        type: 2
+    })
 
-  Clash.enemies = [];
-  Clash.timeSinceLastSpawmEnemies = 5;
-  Clash.enemiesKilled = 0;
+    Clash.enemies = [];
+    Clash.timeSinceLastSpawmEnemies = 5;
+    Clash.enemiesKilled = 0;
 
 
-  Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
+    Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
 
-  //Mọi công việc làm trước hàm này
-  createDisplay();
+    //Mọi công việc làm trước hàm này
+    createDisplay();
 }
 
 var createDisplay = function () {
@@ -132,28 +133,28 @@ var createObjectDisplay = function (position, spriteName, isAnchor) {
 }
 
 var update = function () {
-    if (Clash.isPlaygame){
-    Clash.game.physics.arcade.collide(Clash.earth.sprite, Clash.player.sprite);
-    Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
-    Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithObject);
-    Clash.game.physics.arcade.overlap(Clash.player.sprite, Clash.enemyGroup, collisionWithObject);
+    if (Clash.isPlaygame) {
+        Clash.game.physics.arcade.collide(Clash.earth.sprite, Clash.player.sprite);
+        Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
+        Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithObject);
+        Clash.game.physics.arcade.overlap(Clash.player.sprite, Clash.enemyGroup, collisionWithObject);
 
-    Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.itemGroup, collisionBulletAndItem);
+        Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.itemGroup, collisionBulletAndItem);
 
-    Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
+        Clash.display.iconMouse.body.position = new Phaser.Point(Clash.game.input.activePointer.x, Clash.game.input.activePointer.y);
 
-    Clash.player.update();
-    Clash.earth.update();
+        Clash.player.update();
+        Clash.earth.update();
 
-    Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
-    if (Clash.timeSinceLastSpawmEnemies > 0.43+(Clash.configs.spawntimeEnemy/(Clash.enemiesKilled/10+1)) ) {
+        Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
+        if (Clash.timeSinceLastSpawmEnemies > 0.43 + (Clash.configs.spawntimeEnemy / (Clash.enemiesKilled / 10 + 1))) {
 
-        Clash.enemies.push(new EnemyUfo1Small1());
-        Clash.enemies.push(new EnemyUfo1Big2());
+            Clash.enemies.push(new EnemyUfo1Small1());
+            Clash.enemies.push(new EnemyUfo1Big2());
 
-        Clash.timeSinceLastSpawmEnemies = 0;
+            Clash.timeSinceLastSpawmEnemies = 0;
+        }
     }
-}
 
 }
 
@@ -177,13 +178,29 @@ var collisionWithObject = function (object, actorSprite) {
     actorSprite.kill();
 }
 
-var killAllObject = function(){
-  Clash.enemyGroup.forEachAlive(killObject, this);
-  killObject(Clash);
+var killAllObject = function () {
+    Clash.enemyGroup.forEachAlive(killObject, this);
+    Clash.playerBulletGroup.forEachAlive(killObject, this);
+    Clash.itemGroup.forEachAlive(killObject, this);
+    killObject(Clash.player.sprite);
+    killObject(Clash.display.earthHP);
+    killObject(Clash.display.earthXP);
+    killObject(Clash.display.shipHP);
+    killObject(Clash.display.shipXP);
+    killObject(Clash.display.frameWeapon);
+    killObject(Clash.display.iconEarth);
+    killObject(Clash.display.iconEarthHP);
+    killObject(Clash.display.iconEarthXP);
+    killObject(Clash.display.iconShipXP);
+    killObject(Clash.display.iconShipHP);
+    killObject(Clash.display.weapon);
+    killObject(Clash.display.iconShip);
+    killObject(Clash.display.iconMouse);
+
 }
 
-var killObject = function(object){
-  object.kill();
+var killObject = function (object) {
+    object.kill();
 }
 
 var render = function () {

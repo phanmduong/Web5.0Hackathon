@@ -27,6 +27,7 @@ class Earth {
         if (this.sprite.health <= 0) {this.sprite.health = 0;
           Clash.playgame.reset(Clash.game.height / 2, Clash.game.width / 2);
           Clash.isPlaygame = false;
+          killAllObject();
         }
         Clash.display.earthHP.scale.setTo(this.sprite.health * 1.5 / this.configs.health, 1.5);
         // console.log(this.sprite.health);
