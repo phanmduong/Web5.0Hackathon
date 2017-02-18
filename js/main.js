@@ -77,6 +77,7 @@ var clickPlaygame = function () {
 
 
 var createGame = function () {
+    Clash.background2.destroy();
 
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
         health: 10
@@ -231,6 +232,7 @@ var killAllObject = function () {
     killObject(Clash.display.weapon);
     killObject(Clash.display.iconShip);
     killObject(Clash.display.iconMouse);
+    Clash.background2.this.destroy();
 
 }
 
