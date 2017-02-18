@@ -16,6 +16,7 @@ window.onload = function () {
     );
 }
 
+
 // preparations before game starts
 var preload = function () {
     Clash.game.scale.minWidth = 512;
