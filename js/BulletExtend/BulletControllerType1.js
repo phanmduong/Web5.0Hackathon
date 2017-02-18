@@ -11,6 +11,7 @@ class BulletControllerType1 extends BulletController {
                 nameMusic: 'shotcannon',
                 radius: 13,
                 transparency: false
+          
             }
         );
     }

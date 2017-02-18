@@ -56,6 +56,10 @@ var create = function () {
     Clash.playgame.anchor = new Phaser.Point(0.5, 0.5);
 
     Clash.killAllObject = killAllObject;
+    Clash.stateText = Clash.game.add.text(500,300,' ', { font: '84px Arial', fill: '#fff' });
+    Clash.stateText.anchor.setTo(0.5, 0.5);
+    Clash.stateText.visible = false;
+
 
 }
 
@@ -64,8 +68,10 @@ var clickPlaygame = function () {
     createGame();
     Clash.isPlaygame = true;
     Clash.playgame.kill();
+    Clash.stateText.visible = false;
 
 }
+
 
 var createGame = function () {
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
@@ -96,8 +102,11 @@ var createGame = function () {
 
     Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
 
+
+
     //Mọi công việc làm trước hàm này
     createDisplay();
+
 }
 
 var createDisplay = function () {
@@ -121,6 +130,7 @@ var createDisplay = function () {
     Clash.display.iconMouse.body.setCircle(10, Clash.display.iconMouse.height / 2 - 10, Clash.display.iconMouse.width / 2 - 10);
 
 }
+
 
 var createObjectDisplay = function (position, spriteName, isAnchor) {
     var objectDisplay = Clash.game.add.sprite(position.x, position.y, "assets", spriteName);
