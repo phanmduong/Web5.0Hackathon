@@ -2,6 +2,7 @@ var Clash = {};
 Clash.configs = {
     spawntimeEnemy: 0.6,
     timePlayerRevival: 2,
+    timeBulletPowerup: 60,
 };
 Clash.display = {};
 
@@ -65,20 +66,18 @@ var create = function () {
 
     Clash.itemGroup = Clash.game.add.physicsGroup();
     Clash.item = new ItemController("frame0000.png", {
-        health: 1
+        health: 1,
+        type: 2
     })
-    Clash.eatItem = false;
-
 
     Clash.enemies = [];
     Clash.timeSinceLastSpawmEnemies = 0;
 
     Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
+    Clash.game.input.mouse.enabled = true;
 
     //Mọi công việc làm trước hàm này
     createDisplay();
-
-
 }
 
 var createDisplay = function () {
@@ -141,7 +140,7 @@ var update = function () {
 var collisionBulletAndItem = function (bulletSprite, actorSprite) {
     bulletSprite.kill();
     actorSprite.kill();
-    Clash.eatItem = true;
+    Clash.player.sprite.bulletType = actorSprite.type;
 }
 
 

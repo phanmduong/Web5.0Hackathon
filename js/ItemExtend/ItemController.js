@@ -9,6 +9,8 @@ class ItemController {
             spriteName
         );
         this.configs = configs;
+        this.sprite.type = this.configs.type;
+        this.configs = configs;
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
         this.sprite.health = this.configs.health;
         Clash.game.physics.arcade.moveToObject(this.sprite, Clash.earth.sprite, this.configs.enemySpeed);

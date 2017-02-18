@@ -15,11 +15,13 @@ class ShipController {
         this.timeSinceLastFire = 0;
 
         this.sprite.health = this.configs.health;
+        this.sprite.bulletType = 1;
 
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
 
         this.timeSinceLastRevival = 0;
         this.timeSinceBlastware = 0;
+        this.timeSinceLastBulletPowerup = 0;
         this.isBlastware = false;
 
 
@@ -46,6 +48,12 @@ class ShipController {
 
         if (Clash.game.input.activePointer.isDown) {
             this.fire();
+        }
+        //powerUp bullet
+        this.timeSinceLastBulletPowerup += Clash.game.time.physicsElapsed;
+        if (this.timeSinceLastBulletPowerup >= Clash.configs.timeBulletPowerup) {
+            this.timeSinceLastBulletPowerup = 0;
+            this.sprite.bulletType = 1;
         }
     }
 
@@ -101,13 +109,17 @@ class ShipController {
     fire() {
         if (this.timeSinceLastFire > this.configs.cooldown) {
             this.timeSinceLastFire = 0;
-            if (Clash.eatItem == true) {
-                this.createBullet2(new Phaser.Point(0.5, 0.5));
+            switch (this.sprite.bulletType) {
+                case 1:
+                    this.createBullet1(new Phaser.Point(0.5, 0.5));
+                    break;
+                case 2:
+                    this.createBullet2(new Phaser.Point(0.5, 0.5));
+                    break;
+                default:
+                    break;
+
             }
-            else {
-                this.createBullet1(new Phaser.Point(0.5, 0.5));
-            }
-            //this.createBullet(new Phaser.Point(0.5, 0.5));
         }
     }
 
