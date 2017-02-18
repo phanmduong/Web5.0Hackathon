@@ -63,8 +63,8 @@ var create = function () {
     Clash.enemyGroup = Clash.game.add.physicsGroup();
 
     Clash.itemGroup = Clash.game.add.physicsGroup();
-    Clash.item = new ItemController("frame0000.png",{
-      health : 1
+    Clash.item = new ItemController("frame0000.png", {
+        health: 1
     })
     Clash.eatItem = false;
 
@@ -145,7 +145,9 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
 
 
 var collisionBulletAndActor = function (bulletSprite, actorSprite) {
-    bulletSprite.kill();
+
+    if (!bulletSprite.transparency)
+        bulletSprite.kill();
     actorSprite.kill();
 }
 
