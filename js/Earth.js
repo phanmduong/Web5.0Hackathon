@@ -8,7 +8,7 @@ class Earth {
             y,
             "assets",
             spriteName
-        ); 
+        );
 
         this.configs = configs;
         this.sprite.health = this.configs.health;
@@ -24,7 +24,10 @@ class Earth {
     }
 
     update() {
-        if (this.sprite.health <= 0) this.sprite.health = 0;
+        if (this.sprite.health <= 0) {this.sprite.health = 0;
+          Clash.playgame.reset(Clash.game.height / 2, Clash.game.width / 2);
+          Clash.isPlaygame = false;
+        }
         Clash.display.earthHP.scale.setTo(this.sprite.health * 1.5 / this.configs.health, 1.5);
         // console.log(this.sprite.health);
     }

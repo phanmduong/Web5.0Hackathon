@@ -33,6 +33,7 @@ var preload = function () {
     Clash.game.load.image('background', 'Assets/background/space1.jpg');
     Clash.game.load.audio('backgroundMusic', 'audio/background.mp3');
     Clash.game.load.audio('shotcannon', 'audio/shot/shotcannon.wav');
+    Clash.game.load.spritesheet('button', 'assets/playgame.png', 300, 54);
 
 
 }
@@ -43,42 +44,59 @@ var create = function () {
     Clash.game.physics.startSystem(Phaser.Physics.ARCADE);
     Clash.keyboard = Clash.game.input.keyboard;
 
+
+
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
     Clash.backgroundMusic = Clash.game.add.audio('backgroundMusic');
     Clash.backgroundMusic.volume = 5;
     Clash.backgroundMusic.loopFull();
 
+    Clash.isPlaygame = false;
+    Clash.playgame = Clash.game.add.button(Clash.game.height / 2, Clash.game.width / 2, 'button', clickPlaygame, this, 1,0);
+    Clash.playgame.anchor = new Phaser.Point(0.5, 0.5);
 
-    Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
-        health: 50
-    });
 
-    Clash.playerBulletGroup = Clash.game.add.physicsGroup();
+}
 
-    Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
-        cooldown: 0.5,
-        radius: 34,
-        health: 20,
-        shipSpeed: 1000
-    });
 
-    Clash.enemyGroup = Clash.game.add.physicsGroup();
+var clickPlaygame = function(){
+  createGame();
+    Clash.isPlaygame = true;
+    Clash.playgame.kill();
 
-    Clash.itemGroup = Clash.game.add.physicsGroup();
-    Clash.item = new ItemController("frame0000.png", {
-        health: 1,
-        type: 2
-    })
+}
 
-    Clash.enemies = [];
-    Clash.timeSinceLastSpawmEnemies = 5;
-    Clash.enemiesKilled = 0;
+var createGame = function(){
+  Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
+      health: 1
+  });
 
-    Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
-    Clash.game.input.mouse.enabled = true;
+  Clash.playerBulletGroup = Clash.game.add.physicsGroup();
 
-    //Mọi công việc làm trước hàm này
-    createDisplay();
+  Clash.player = new ShipController(Clash.game.height / 2, Clash.game.width / 2 - Clash.earth.sprite.width / 2, "player1.png", {
+      cooldown: 0.5,
+      radius: 34,
+      health: 20,
+      shipSpeed: 1000
+  });
+
+  Clash.enemyGroup = Clash.game.add.physicsGroup();
+
+  Clash.itemGroup = Clash.game.add.physicsGroup();
+  Clash.item = new ItemController("frame0000.png", {
+      health: 1,
+      type: 2
+  })
+
+  Clash.enemies = [];
+  Clash.timeSinceLastSpawmEnemies = 5;
+  Clash.enemiesKilled = 0;
+
+
+  Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
+
+  //Mọi công việc làm trước hàm này
+  createDisplay();
 }
 
 var createDisplay = function () {
@@ -114,6 +132,7 @@ var createObjectDisplay = function (position, spriteName, isAnchor) {
 }
 
 var update = function () {
+    if (Clash.isPlaygame){
     Clash.game.physics.arcade.collide(Clash.earth.sprite, Clash.player.sprite);
     Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
     Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithObject);
@@ -134,7 +153,7 @@ var update = function () {
 
         Clash.timeSinceLastSpawmEnemies = 0;
     }
-
+}
 
 }
 
@@ -156,6 +175,15 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
 var collisionWithObject = function (object, actorSprite) {
     object.damage(actorSprite.health);
     actorSprite.kill();
+}
+
+var killAllObject = function(){
+  Clash.enemyGroup.forEachAlive(killObject, this);
+  killObject(Clash);
+}
+
+var killObject = function(object){
+  object.kill();
 }
 
 var render = function () {
