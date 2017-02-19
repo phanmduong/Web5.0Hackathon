@@ -28,8 +28,8 @@ window.onload = function () {
 
 // preparations before game starts
 var preload = function () {
-    Clash.game.scale.minWidth = 512;
-    Clash.game.scale.minHeight = 512;
+    Clash.game.scale.minWidth = 256;
+    Clash.game.scale.minHeight = 256;
     Clash.game.scale.maxWidth = 1024;
     Clash.game.scale.maxHeight = 1024;
     Clash.game.scale.pageAlignHorizontally = true;
