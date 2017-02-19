@@ -67,6 +67,7 @@ var create = function () {
     Clash.isPlaygame = false;
     Clash.playgame = Clash.game.add.button(Clash.game.height / 2, 800, 'button', clickPlaygame, this, 1, 0);
     Clash.playgame.anchor = new Phaser.Point(0.5, 0.5);
+    Clash.playgame.scale.setTo(1.5, 1.5);
 
     Clash.killAllObject = killAllObject;
     Clash.stateText = Clash.game.add.text(Clash.game.height / 2, 300, ' ', {font: '84px Arial', fill: '#fff'});
