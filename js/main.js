@@ -132,6 +132,11 @@ var createGame = function () {
     Clash.score = Clash.game.add.text(160, 360, ' ', {font: '30px Arial', fill: '#fff'});
     Clash.score.anchor.setTo(0.5, 0.5);
 
+    Clash.fast = new EnemyFast( -10,300,"ufo2-small1.png",{
+      health:2,
+      score: 5
+    });
+
     //Mọi công việc làm trước hàm này
     createDisplay();
 
@@ -197,11 +202,15 @@ var update = function () {
         Clash.player.update();
         Clash.earth.update();
 
+
+
+
         Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
         if (Clash.timeSinceLastSpawmEnemies > 0.43 + (Clash.configs.spawntimeEnemy / (Clash.enemiesKilled / 10 + 1))) {
 
             Clash.enemies.push(new EnemyUfo1Small1());
             Clash.enemies.push(new EnemyUfo1Big2());
+
 
             Clash.timeSinceLastSpawmEnemies = 0;
         }
