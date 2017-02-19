@@ -28,7 +28,6 @@ window.onload = function () {
 
 // preparations before game starts
 var preload = function () {
-
     Clash.game.scale.minWidth = 512;
     Clash.game.scale.minHeight = 512;
     Clash.game.scale.maxWidth = 1024;
@@ -37,7 +36,9 @@ var preload = function () {
     Clash.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
     Clash.game.time.advancedTiming = true;
+}
 
+var load = function () {
     Clash.game.load.atlasJSONHash('assets', 'Assets/assets.png', 'Assets/assets.json');
     Clash.game.load.image('background', 'Assets/background/space1.jpg');
     Clash.game.load.image('background2', 'Assets/background/background2.png');
@@ -48,8 +49,7 @@ var preload = function () {
     Clash.game.load.audio('explosion', 'audio/explosion.wav');
     Clash.game.load.spritesheet('button', 'Assets/playgame.png', 511, 108);
     Clash.game.load.spritesheet('kaboom', 'Assets/explode.png', 128, 128);
-
-
+    Clash.game.load.start();
 }
 
 
@@ -57,6 +57,30 @@ var preload = function () {
 var create = function () {
     Clash.game.physics.startSystem(Phaser.Physics.ARCADE);
     Clash.keyboard = Clash.game.input.keyboard;
+
+    Clash.game.stage.backgroundColor = '#182d3b';
+
+    Clash.textLoading = Clash.game.add.text(Clash.game.height / 2, Clash.game.width / 2, '', {
+        font: '50px Arial',
+        fill: '#fff'
+    });
+    Clash.textLoading.anchor.setTo(0.5, 0.5);
+
+    Clash.game.load.onLoadStart.add(startLoad, this);
+    Clash.game.load.onLoadComplete.add(loadComplete, this);
+
+    load();
+}
+
+var startLoad = function () {
+    Clash.textLoading.text = "Loading..."
+}
+
+var loadComplete = function () {
+
+    Clash.textLoading.text = "Loading complete";
+
+    Clash.textLoading.visible = false;
 
     Clash.background = Clash.game.add.tileSprite(0, 0, 1024, 1024, 'background');
     Clash.background2 = Clash.game.add.tileSprite(400, 250, 256, 256, 'background2');
@@ -85,7 +109,6 @@ var create = function () {
     }
 
     Clash.highScore.text = "High score: " + localStorage.getItem("score");
-
 }
 
 
