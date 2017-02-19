@@ -46,8 +46,8 @@ var preload = function () {
     Clash.game.load.audio('shotrocket', 'audio/shot/shotrocket.wav');
     Clash.game.load.audio('bonus', 'audio/bonus.wav');
     Clash.game.load.audio('explosion', 'audio/explosion.wav');
-    Clash.game.load.spritesheet('button', 'assets/playgame.png', 511, 108);
-    Clash.game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
+    Clash.game.load.spritesheet('button', 'Assets/playgame.png', 511, 108);
+    Clash.game.load.spritesheet('kaboom', 'Assets/explode.png', 128, 128);
 
 
 }
