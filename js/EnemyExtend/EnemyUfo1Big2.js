@@ -7,7 +7,12 @@ class EnemyUfo1Big2 extends EnemyController {
                 enemySpeed: 30,
                 radius: 40,
                 score: 2,
+                isRandom: true
             }
         );
+        Clash.game.physics.arcade.moveToObject(this.sprite, Clash.earth.sprite, this.configs.enemySpeed);
+    }
+    update(){
+
     }
 }

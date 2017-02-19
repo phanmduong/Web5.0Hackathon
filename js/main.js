@@ -4,7 +4,13 @@ Clash.configs = {
     spawntimeItem: 5,
     timePlayerRevival: 2,
     timeBulletPowerup: 10,
-    maxItemPowerup: 4
+    maxItemPowerup: 4,
+    maxEnemyMeteorite: 40,
+    maxEnemyFast: 6,
+    timeSpawnEnemyFirst: 40000,
+    spawntimeEnemyMeteorite: 0.5,
+    timeSpawnEnemyFastFirst: 30000,
+    spawntimeEnemyFast: 1
 };
 Clash.display = {};
 
@@ -120,7 +126,11 @@ var createGame = function () {
     Clash.enemies = [];
     Clash.timeSinceLastSpawmEnemies = Clash.configs.spawntimeEnemy + 1;
     Clash.timeSinceLastItem = Clash.configs.spawntimeItem + 1;
+    Clash.timeSinceLastEnemyMeteorite = 0;
+    Clash.timeSinceLastEnemyFast = 0;
     Clash.enemiesKilled = 0;
+    Clash.countEnemyMeteorite = 0;
+    Clash.countEnemyFast = 0;
 
 
     Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
@@ -131,11 +141,6 @@ var createGame = function () {
 
     Clash.score = Clash.game.add.text(160, 360, ' ', {font: '30px Arial', fill: '#fff'});
     Clash.score.anchor.setTo(0.5, 0.5);
-
-    Clash.fast = new EnemyFast( -10,300,"ufo2-small1.png",{
-      health:2,
-      score: 5
-    });
 
     //Mọi công việc làm trước hàm này
     createDisplay();
@@ -203,8 +208,6 @@ var update = function () {
         Clash.earth.update();
 
 
-
-
         Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
         if (Clash.timeSinceLastSpawmEnemies > 0.43 + (Clash.configs.spawntimeEnemy / (Clash.enemiesKilled / 10 + 1))) {
 
@@ -214,6 +217,41 @@ var update = function () {
 
             Clash.timeSinceLastSpawmEnemies = 0;
         }
+
+        if (Clash.game.time.now % Clash.configs.timeSpawnEnemyFirst >= Clash.configs.timeSpawnEnemyFirst / 2) {
+
+            Clash.timeSinceLastEnemyMeteorite += Clash.game.time.physicsElapsed;
+            if (Clash.timeSinceLastEnemyMeteorite >= Clash.configs.spawntimeEnemyMeteorite && Clash.countEnemyMeteorite < Clash.configs.maxEnemyMeteorite) {
+                Clash.enemies.push(new EnemyMeteorite({
+                    moveRadius: 300
+                }));
+                Clash.timeSinceLastEnemyMeteorite = 0;
+                Clash.countEnemyMeteorite++;
+            }
+        } else {
+            Clash.countEnemyMeteorite = 0;
+        }
+
+        if (Clash.game.time.now % Clash.configs.timeSpawnEnemyFastFirst >= Clash.configs.timeSpawnEnemyFastFirst / 2) {
+
+            Clash.timeSinceLastEnemyFast += Clash.game.time.physicsElapsed;
+            if (Clash.timeSinceLastEnemyFast >= Clash.configs.spawntimeEnemyFast && Clash.countEnemyFast < Clash.configs.maxEnemyFast) {
+                Clash.enemies.push(new EnemyFast(-10, 300, "ufo2-small1.png", {
+                    health: 2,
+                    score: 5
+                }));
+                Clash.timeSinceLastEnemyFast = 0;
+                Clash.countEnemyFast++;
+            }
+        } else {
+            Clash.countEnemyFast = 0;
+        }
+
+
+        Clash.enemies.forEach(function (enemy) {
+            enemy.update();
+        });
+
 
         Clash.timeSinceLastItem += Clash.game.time.physicsElapsed;
 
@@ -331,7 +369,11 @@ var killObject = function (object) {
 }
 
 var render = function () {
-    // Clash.enemyGroup.forEachAlive(renderGroup, this);
+    // try {
+    //     Clash.enemyGroup.forEachAlive(renderGroup, this);
+    // } catch (err) {
+    // }
+
     // Clash.playerBulletGroup.forEachAlive(renderGroup, this);
     // Clash.game.debug.body(Clash.display.iconMouse);
     // Clash.game.debug.body(Clash.earth.sprite);

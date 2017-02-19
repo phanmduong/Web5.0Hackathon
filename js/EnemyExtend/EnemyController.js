@@ -1,7 +1,8 @@
 class EnemyController {
     constructor(spriteName, configs) {
+
         this.distanceMinWithEarth = 400;
-        this.randomLocation();
+            this.randomLocation();
         this.sprite = Clash.enemyGroup.create(
             this.x,
             this.y,
@@ -16,7 +17,6 @@ class EnemyController {
             this.sprite.height / 2 - this.configs.radius);
         this.sprite.health = this.configs.health;
         this.sprite.score = this.configs.score;
-        Clash.game.physics.arcade.moveToObject(this.sprite, Clash.earth.sprite, this.configs.enemySpeed);
         this.sprite.scale.setTo(1.5, 1.5);
     }
 
@@ -30,4 +30,6 @@ class EnemyController {
                     (this.y - Clash.game.width / 2) * (this.y - Clash.game.width / 2)) >= this.distanceMinWithEarth) break;
         } while (true);
     }
+
+    update(){}
 }

@@ -9,8 +9,8 @@ class BulletControllerType2 extends BulletController {
                 bulletSpeed: 1000,
                 nameMusic: 'shotrocket',
                 radius: 20,
-                transparency: true,
-                bulletStrength: 100
+                transparency: false,
+                bulletStrength: 10
             }
         );
     }
