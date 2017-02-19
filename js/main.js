@@ -147,7 +147,6 @@ var createGame = function () {
     Clash.itemExist = true;
     Clash.itemNumberHadEaten = 0;
 
-    Clash.enemies = [];
     Clash.timeSinceLastSpawmEnemies = Clash.configs.spawntimeEnemy + 1;
     Clash.timeSinceLastItem = Clash.configs.spawntimeItem + 1;
     Clash.timeSinceLastEnemyMeteorite = 0;
@@ -235,8 +234,8 @@ var update = function () {
         Clash.timeSinceLastSpawmEnemies += Clash.game.time.physicsElapsed;
         if (Clash.timeSinceLastSpawmEnemies > 0.43 + (Clash.configs.spawntimeEnemy / (Clash.enemiesKilled / 10 + 1))) {
 
-            Clash.enemies.push(new EnemyUfo1Small1());
-            Clash.enemies.push(new EnemyUfo1Big2());
+            new EnemyUfo1Small1();
+            new EnemyUfo1Big2();
 
 
             Clash.timeSinceLastSpawmEnemies = 0;
@@ -246,9 +245,9 @@ var update = function () {
 
             Clash.timeSinceLastEnemyMeteorite += Clash.game.time.physicsElapsed;
             if (Clash.timeSinceLastEnemyMeteorite >= Clash.configs.spawntimeEnemyMeteorite && Clash.countEnemyMeteorite < Clash.configs.maxEnemyMeteorite) {
-                Clash.enemies.push(new EnemyMeteorite({
+                new EnemyMeteorite({
                     moveRadius: 300
-                }));
+                });
                 Clash.timeSinceLastEnemyMeteorite = 0;
                 Clash.countEnemyMeteorite++;
             }
@@ -265,10 +264,10 @@ var update = function () {
                     y = Clash.game.world.randomY;
                 }
                 while (Clash.game.height / 2 + 200 > y && Clash.game.height / 2 - 200 < y);
-                Clash.enemies.push(new EnemyFast(-10, y, "ufo2-small1.png", {
+                new EnemyFast(-10, y, "ufo2-small1.png", {
                     health: 2,
                     score: 5
-                }));
+                });
                 Clash.timeSinceLastEnemyFast = 0;
                 Clash.countEnemyFast++;
             }
@@ -277,9 +276,9 @@ var update = function () {
         }
 
 
-        Clash.enemies.forEach(function (enemy) {
-            enemy.update();
-        });
+        Clash.enemyGroup.forEachAlive(function (enemy) {
+            enemy.father.update();
+        }, this);
 
 
         Clash.timeSinceLastItem += Clash.game.time.physicsElapsed;

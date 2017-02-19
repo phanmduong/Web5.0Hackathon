@@ -11,6 +11,7 @@ class EnemyUfo1Big2 extends EnemyController {
             }
         );
         Clash.game.physics.arcade.moveToObject(this.sprite, Clash.earth.sprite, this.configs.enemySpeed);
+        this.sprite.father = this;
     }
     update(){
 

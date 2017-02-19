@@ -11,6 +11,7 @@ class EnemyMeteorite extends EnemyController {
             }
         );
         this.period = 0;
+        this.sprite.father = this;
     }
 
     update() {
