@@ -24,11 +24,13 @@ class Earth {
     }
 
     update() {
-        if (this.sprite.health <= 0) {this.sprite.health = 0;
-          Clash.playgame.reset(Clash.game.height / 2, 800);
-          Clash.isPlaygame = false;
-          Clash.stateText.text = "Game over";
-          Clash.stateText.visible = true;
+        if (this.sprite.health <= 0) {
+            this.sprite.health = 0;
+            Clash.killAllObject();
+            Clash.playgame.reset(Clash.game.height / 2, 800);
+            Clash.isPlaygame = false;
+            Clash.stateText.text = "Game over";
+            Clash.stateText.visible = true;
         }
         Clash.display.earthHP.scale.setTo(this.sprite.health * 1.5 / this.configs.health, 1.5);
         // console.log(this.sprite.health);

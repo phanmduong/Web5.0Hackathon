@@ -236,7 +236,12 @@ var update = function () {
 
             Clash.timeSinceLastEnemyFast += Clash.game.time.physicsElapsed;
             if (Clash.timeSinceLastEnemyFast >= Clash.configs.spawntimeEnemyFast && Clash.countEnemyFast < Clash.configs.maxEnemyFast) {
-                Clash.enemies.push(new EnemyFast(-10, 300, "ufo2-small1.png", {
+                var y = 0;
+                do {
+                    y = Clash.game.world.randomY;
+                }
+                while (Clash.game.height / 2 + 200 > y && Clash.game.height / 2 - 200 < y);
+                Clash.enemies.push(new EnemyFast(-10, y, "ufo2-small1.png", {
                     health: 2,
                     score: 5
                 }));
@@ -264,8 +269,6 @@ var update = function () {
         }
 
         Clash.score.text = Clash.enemiesKilled;
-    } else {
-        Clash.killAllObject();
     }
 
 }
