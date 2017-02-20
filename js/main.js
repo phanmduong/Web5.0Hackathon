@@ -434,11 +434,11 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
             try {
                 if (Math.sqrt(Math.pow(enemy.position.x - actorSprite.position.x, 2) +
                         Math.pow(enemy.position.y - actorSprite.position.y, 2)) < Clash.configs.maxDistanceBoom) {
-                    try{
+                    try {
                         var explosion = Clash.explosions.getFirstExists(false);
                         explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
                         explosion.play('kaboom', 30, false, true);
-                    } catch (err){
+                    } catch (err) {
 
                     }
 
@@ -482,11 +482,12 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
 }
 
 var collisionWithObject = function (object, actorSprite) {
-    try{
+    try {
         var explosion = Clash.explosions.getFirstExists(false);
         explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
         explosion.play('kaboom', 30, false, true);
-    } catch (err){}
+    } catch (err) {
+    }
 
     Clash.musicExplosion.play();
 
@@ -512,7 +513,10 @@ var killAllObject = function () {
         Clash.score.visible = false;
     } catch (err) {
     }
-
+    try {
+        Clash.display.clickHere.visible = false;
+    } catch (err) {
+    }
 
     Clash.enemyGroup.forEachAlive(killObject, this);
     Clash.playerBulletGroup.forEachAlive(killObject, this);
