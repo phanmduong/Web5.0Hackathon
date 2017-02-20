@@ -18,10 +18,11 @@ class ShipController {
         this.sprite.bulletType = 1;
 
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
-
+        this.sprite.numberBullet = 1;
         this.timeSinceLastRevival = 0;
         this.timeSinceBlastware = 0;
         this.timeSinceLastBulletPowerup = 0;
+        this.timeSinceLastBulletPowerup2 = 0;
         this.isBlastware = false;
 
 
@@ -32,23 +33,39 @@ class ShipController {
     }
 
     update() {
-
-        if (Clash.itemNumberHadEaten < Clash.configs.maxItemPowerup) {
-            this.timeSinceLastBulletPowerup += Clash.game.time.physicsElapsed;
-            Clash.display.progressPowerup.scale.setTo((Clash.configs.timeBulletPowerup - this.timeSinceLastBulletPowerup ) * 1.5 / Clash.configs.timeBulletPowerup, 1.5);
-            if (this.timeSinceLastBulletPowerup >= Clash.configs.timeBulletPowerup) {
-                this.sprite.bulletType = 1;
-                this.timeSinceLastBulletPowerup = 0;
+        if (Clash.enemiesKilled < Clash.configs.scoreLevelGame2) {
+            if (Clash.itemNumberHadEaten < Clash.configs.maxItemPowerup) {
+                this.timeSinceLastBulletPowerup += Clash.game.time.physicsElapsed;
+                Clash.display.progressPowerup.scale.setTo((Clash.configs.timeBulletPowerup - this.timeSinceLastBulletPowerup ) * 1.5 / Clash.configs.timeBulletPowerup, 1.5);
+                if (this.timeSinceLastBulletPowerup >= Clash.configs.timeBulletPowerup) {
+                    this.sprite.bulletType = 1;
+                    this.timeSinceLastBulletPowerup = 0;
+                    Clash.display.iconPowerup.kill();
+                    Clash.display.progressPowerup.kill();
+                }
+            } else {
+                this.sprite.bulletType = 2;
                 Clash.display.iconPowerup.kill();
                 Clash.display.progressPowerup.kill();
             }
         } else {
-            this.sprite.bulletType = 2;
-            Clash.display.iconPowerup.kill();
-            Clash.display.progressPowerup.kill();
+            if (Clash.itemNumberHadEaten < Clash.configs.maxItemPowerup * 2 && Clash.itemNumberHadEaten > Clash.configs.maxItemPowerup) {
+                this.timeSinceLastBulletPowerup2 += Clash.game.time.physicsElapsed;
+                Clash.display.progressPowerup.scale.setTo((Clash.configs.timeBulletPowerup - this.timeSinceLastBulletPowerup2 ) * 1.5 / (Clash.configs.timeBulletPowerup), 1.5);
+                if (this.timeSinceLastBulletPowerup2 >= Clash.configs.timeBulletPowerup) {
+                    this.sprite.numberBullet = 3;
+                    this.timeSinceLastBulletPowerup2 = 0;
+                    Clash.display.iconPowerup.kill();
+                    Clash.display.progressPowerup.kill();
+                }
+            } else {
+                this.sprite.numberBullet = 1;
+                Clash.display.iconPowerup.kill();
+                Clash.display.progressPowerup.kill();
+            }
         }
 
-        switch (this.sprite.bulletType){
+        switch (this.sprite.bulletType) {
             case 1:
                 Clash.display.weapon.frameName = 'cannon1.jpg';
                 break;
@@ -134,7 +151,13 @@ class ShipController {
                     this.createBullet1(new Phaser.Point(0.5, 0.5));
                     break;
                 case 2:
-                    this.createBullet2(new Phaser.Point(0.5, 0.5));
+                    if (this.sprite.numberBullet == 1) {
+                        this.createBullet2(new Phaser.Point(0.5, 0.5));
+                    } else {
+                        this.createBullet2(new Phaser.Point(0.5, 0.5));
+                        this.createBullet2(new Phaser.Point(0.2, 0.5));
+                        this.createBullet2(new Phaser.Point(0.1, 0.5));
+                    }
                     break;
                 default:
                     break;

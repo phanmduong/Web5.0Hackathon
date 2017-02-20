@@ -2,6 +2,7 @@ var Clash = {};
 Clash.configs = {
     spawntimeEnemy: 4,
     spawntimeItem: 7,
+    spawntimeSheild: 10,
     timePlayerRevival: 2,
     timeBulletPowerup: 10,
     maxItemPowerup: 4,
@@ -13,7 +14,9 @@ Clash.configs = {
     spawntimeEnemyFast: 1,
     timeSpawnItemBoomFirst: 60000,
     maxDistanceBoom: 500,
-    damageItemBoom: 100
+    damageItemBoom: 8,
+    maxEnemyToShield: 2,
+    scoreLevelGame2: 100,
 };
 Clash.display = {};
 
@@ -46,11 +49,13 @@ var load = function () {
     Clash.game.load.atlasJSONHash('assets', 'Assets/assets.png', 'Assets/assets.json');
     Clash.game.load.image('background', 'Assets/background/space1.jpg');
     Clash.game.load.image('background2', 'Assets/background/background2.png');
+    Clash.game.load.image('clickhere', 'Assets/clickhere.png');
     Clash.game.load.audio('backgroundMusic', 'audio/background.mp3');
     Clash.game.load.audio('shotcannon', 'audio/shot/shotcannon.wav');
     Clash.game.load.audio('shotrocket', 'audio/shot/shotrocket.wav');
     Clash.game.load.audio('bonus', 'audio/bonus.wav');
     Clash.game.load.audio('explosion', 'audio/explosion.wav');
+    Clash.game.load.audio('explosionbig', 'audio/explosionbig.wav');
     Clash.game.load.spritesheet('button', 'Assets/playgame.png', 511, 108);
     Clash.game.load.spritesheet('kaboom', 'Assets/explode.png', 128, 128);
     Clash.game.load.start();
@@ -129,6 +134,7 @@ var createGame = function () {
 
     Clash.musicBonus = Clash.game.add.audio('bonus');
     Clash.musicExplosion = Clash.game.add.audio('explosion');
+    Clash.musicExplosionBig = Clash.game.add.audio('explosionbig');
 
     Clash.earth = new Earth(Clash.game.height / 2, Clash.game.width / 2, "base.png", {
         health: 50
@@ -154,9 +160,14 @@ var createGame = function () {
     Clash.timeSinceLastItem = 0;
     Clash.timeSinceLastEnemyMeteorite = 0;
     Clash.timeSinceLastEnemyFast = 0;
+    Clash.timeSinceLastSheild = 0;
     Clash.enemiesKilled = 0;
     Clash.countEnemyMeteorite = 0;
     Clash.countEnemyFast = 0;
+    Clash.countEnemyKill = 0;
+    Clash.countShielded = 1;
+    Clash.isSheild = false;
+    Clash.isClickSheild = false;
 
 
     Clash.cursors = Clash.game.input.keyboard.createCursorKeys();
@@ -178,9 +189,13 @@ var createDisplay = function () {
 
     Clash.display.progressPowerup = createObjectDisplay({x: 152, y: 88}, "imageProgressbar.png", false);
     Clash.display.iconPowerup = createObjectDisplay({x: 250, y: 100}, "timeProgress.png", true);
+    Clash.display.progressSheild = createObjectDisplay({x: 152, y: 38}, "imageSheild.png", false);
+    Clash.display.iconSheild = createObjectDisplay({x: 250, y: 50}, "timeProgress.png", true);
 
     Clash.display.iconPowerup.kill();
     Clash.display.progressPowerup.kill();
+    Clash.display.progressSheild.visible = false;
+    Clash.display.iconSheild.visible = false;
 
     Clash.display.weapon = createObjectDisplay({x: 70, y: 70}, "cannon1.jpg", true);
     Clash.display.frameWeapon = createObjectDisplay({x: 70, y: 70}, "weapon.png", true);
@@ -201,11 +216,19 @@ var createDisplay = function () {
     Clash.display.iconEnemy = createObjectDisplay({x: 70, y: 360}, "ufo1-big1.png", true);
     Clash.display.iconEnemy.scale.setTo(1, 1);
 
+    Clash.sheild = new Mirror(Clash.game.height / 2, Clash.game.height / 2, "blastwave-blue.png", {radius: 130});
+    Clash.sheild.sprite.kill();
+
+    Clash.display.clickHere = Clash.game.add.sprite(Clash.game.height / 2, Clash.game.height / 2, 'clickhere');
+    Clash.display.clickHere.scale.setTo(1.5, 1.5);
+    Clash.display.clickHere.anchor = new Phaser.Point(0.5, 0.5);
+    Clash.display.clickHere.visible = false;
+
     Clash.display.iconMouse = createObjectDisplay({x: 70, y: 70}, "clock1.png", true);
 
     Clash.game.physics.enable(Clash.display.iconMouse, Phaser.Physics.ARCADE);
-    Clash.display.iconMouse.body.setCircle(10, Clash.display.iconMouse.height / 2 - 10, Clash.display.iconMouse.width / 2 - 10);
 
+    Clash.display.iconMouse.body.setCircle(10, Clash.display.iconMouse.height / 2 - 10, Clash.display.iconMouse.width / 2 - 10);
 }
 
 
@@ -223,7 +246,6 @@ var update = function () {
     if (Clash.isPlaygame) {
         Clash.game.physics.arcade.collide(Clash.earth.sprite, Clash.player.sprite);
         Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.enemyGroup, collisionBulletAndActor);
-        Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithObject);
         Clash.game.physics.arcade.overlap(Clash.player.sprite, Clash.enemyGroup, collisionWithObject);
 
         Clash.game.physics.arcade.overlap(Clash.playerBulletGroup, Clash.itemGroup, collisionBulletAndItem);
@@ -309,6 +331,17 @@ var update = function () {
             Clash.timeSinceLastItem = 0;
         }
 
+        if (Clash.enemiesKilled >= Clash.configs.scoreLevelGame2) {
+            if (Clash.timeSinceLastItem >= Clash.configs.spawntimeItem && Clash.itemNumberHadEaten < Clash.configs.maxItemPowerup * 2){
+                new ItemController("frame0000.png", {
+                    health: 1,
+                    type: 2
+                });
+                Clash.timeSinceLastItem = 0;
+            }
+        }
+
+
         if (Clash.game.time.now % Clash.configs.timeSpawnItemBoomFirst >= Clash.configs.timeSpawnItemBoomFirst / 2) {
             if (!Clash.isItemBoom) {
                 Clash.isItemBoom = true;
@@ -321,8 +354,48 @@ var update = function () {
             Clash.isItemBoom = false;
         }
 
+        if (Clash.isSheild) {
+            Clash.game.physics.arcade.overlap(Clash.sheild.sprite, Clash.enemyGroup, collisionShieldAndEnemy);
+            Clash.timeSinceLastSheild += Clash.game.time.physicsElapsed;
+            Clash.display.progressSheild.scale.setTo((Clash.configs.spawntimeSheild - Clash.timeSinceLastSheild) * 1.5 / Clash.configs.spawntimeSheild, 1.5);
+            if (Clash.timeSinceLastSheild >= Clash.configs.spawntimeSheild) {
+                Clash.isSheild = false;
+                Clash.timeSinceLastSheild = 0;
+                Clash.sheild.sprite.kill();
+            }
+        } else {
+            Clash.display.progressSheild.visible = false;
+            Clash.display.iconSheild.visible = false;
+            Clash.game.physics.arcade.overlap(Clash.earth.sprite, Clash.enemyGroup, collisionWithObject);
+        }
+
         Clash.score.text = Clash.enemiesKilled;
+
+        if (Clash.enemiesKilled < Clash.configs.scoreLevelGame2) {
+            if (Clash.itemNumberHadEaten > Clash.configs.maxItemPowerup) {
+                Clash.itemNumberHadEaten = Clash.configs.maxItemPowerup;
+            }
+            Clash.display.shipXP.scale.setTo(Clash.itemNumberHadEaten * 1.5 / Clash.configs.maxItemPowerup, 1.5);
+        } else {
+            if (Clash.itemNumberHadEaten >= Clash.configs.maxItemPowerup * 2) {
+                Clash.itemNumberHadEaten = Clash.configs.maxItemPowerup * 2;
+            }
+            Clash.display.shipXP.scale.setTo(Clash.itemNumberHadEaten * 1.5 / (Clash.configs.maxItemPowerup*2), 1.5);
+        }
     }
+
+
+
+}
+
+var collisionShieldAndEnemy = function (shield, enemy) {
+    // console.log("enemy");
+    var explosion = Clash.explosions.getFirstExists(false);
+    explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
+    explosion.play('kaboom', 30, false, true);
+    Clash.musicExplosion.play();
+    Clash.enemiesKilled += enemy.score;
+    enemy.kill();
 
 }
 
@@ -333,16 +406,10 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
     // bulletSprite.damage(actorSprite.health);
     actorSprite.kill();
 
-    Clash.musicBonus.play();
     if (actorSprite.type == 2) {
+        Clash.musicBonus.play();
         Clash.player.timeSinceLastBulletPowerup = 0;
         Clash.itemNumberHadEaten++;
-
-        if (Clash.itemNumberHadEaten > Clash.configs.maxItemPowerup) {
-            Clash.itemNumberHadEaten = Clash.configs.maxItemPowerup;
-        }
-
-        Clash.display.shipXP.scale.setTo(Clash.itemNumberHadEaten * 1.5 / Clash.configs.maxItemPowerup, 1.5);
 
         Clash.player.sprite.bulletType = 2;
 
@@ -354,14 +421,21 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
     }
 
     if (actorSprite.type == 1) {
+        Clash.musicExplosionBig.play();
         Clash.enemyGroup.forEachAlive(function (enemy) {
-            if (Math.sqrt(Math.pow(enemy.position.x - actorSprite.position.x, 2) +
-                    Math.pow(enemy.position.y - actorSprite.position.y, 2)) < Clash.configs.maxDistanceBoom) {
-                enemy.damage(Clash.configs.damageItemBoom);
-                var explosion = Clash.explosions.getFirstExists(false);
-                explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
-                explosion.play('kaboom', 30, false, true);
-                Clash.musicExplosion.play();
+            try {
+                if (Math.sqrt(Math.pow(enemy.position.x - actorSprite.position.x, 2) +
+                        Math.pow(enemy.position.y - actorSprite.position.y, 2)) < Clash.configs.maxDistanceBoom) {
+                    var explosion = Clash.explosions.getFirstExists(false);
+                    explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
+                    explosion.play('kaboom', 30, false, true);
+                    enemy.damage(Clash.configs.damageItemBoom);
+                    if (!enemy.alive) {
+                        Clash.enemiesKilled += enemy.score;
+                        Clash.countEnemyKill += 1;
+                    }
+                }
+            } catch (err) {
             }
         }, this);
     }
@@ -380,9 +454,13 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
             bulletSprite.bulletStrength
         );
         bulletSprite.damage(actorSpriteHealth);
-        if (!actorSprite.alive) Clash.enemiesKilled += actorSprite.score;
+        if (!actorSprite.alive) {
+            Clash.enemiesKilled += actorSprite.score;
+            Clash.countEnemyKill += 1;
+        }
     } else {
         Clash.enemiesKilled += actorSprite.score;
+        Clash.countEnemyKill += 1;
         actorSprite.kill();
     }
 }
@@ -422,6 +500,10 @@ var killAllObject = function () {
         killObject(Clash.display.iconPowerup);
         killObject(Clash.display.progressPowerup);
         killObject(Clash.display.iconEnemy);
+        killObject(Clash.display.clickHere);
+        killObject(Clash.sheild);
+        killObject(Clash.display.progressSheild);
+        killObject(Clash.display.iconSheild);
         Clash.score.visible = false;
         Clash.highScore.visible = true;
 
@@ -442,16 +524,18 @@ var killObject = function (object) {
 var render = function () {
     // try {
     //     Clash.enemyGroup.forEachAlive(renderGroup, this);
+    //     Clash.playerBulletGroup.forEachAlive(renderGroup, this);
+    //     Clash.game.debug.body(Clash.display.iconMouse);
+    //     Clash.game.debug.body(Clash.sheild.sprite);
+    //     // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
+    //     Clash.game.debug.body(Clash.player.sprite);
+    //     Clash.game.debug.text('Elapsed seconds: ' + Clash.game.time.totalElapsedSeconds(), 32, 32);
     // } catch (err) {
     // }
-    //
-    // Clash.playerBulletGroup.forEachAlive(renderGroup, this);
-    // Clash.game.debug.body(Clash.display.iconMouse);
-    // Clash.game.debug.body(Clash.earth.sprite);
-    // // Clash.game.debug.spriteBounds(Clash.display.iconEarth);
-    // Clash.game.debug.body(Clash.player.sprite);
-    // Clash.game.debug.text('Elapsed seconds: ' + Clash.game.time.totalElapsedSeconds(), 32, 32);
+
+
 }
+
 function setupInvader(invader) {
 
     invader.anchor.x = 0.5;
@@ -459,6 +543,7 @@ function setupInvader(invader) {
     invader.animations.add('kaboom');
 
 }
+
 function renderGroup(member) {
     Clash.game.debug.body(member);
 }
