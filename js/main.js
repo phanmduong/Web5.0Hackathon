@@ -16,7 +16,7 @@ Clash.configs = {
     maxDistanceBoom: 500,
     damageItemBoom: 8,
     maxEnemyToShield: 2,
-    scoreLevelGame2: 100,
+    scoreLevelGame2: 1500,
 };
 Clash.display = {};
 
@@ -448,9 +448,11 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
 
 
 var collisionBulletAndActor = function (bulletSprite, actorSprite) {
-    var explosion = Clash.explosions.getFirstExists(false);
-    explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
-    explosion.play('kaboom', 30, false, true);
+    try {
+        var explosion = Clash.explosions.getFirstExists(false);
+        explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
+        explosion.play('kaboom', 30, false, true);
+    }catch (err){}
     Clash.musicExplosion.play();
     if (!bulletSprite.transparency) {
         const actorSpriteHealth = actorSprite.health;
