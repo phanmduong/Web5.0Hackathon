@@ -16,7 +16,7 @@ Clash.configs = {
     maxDistanceBoom: 400,
     damageItemBoom: 8,
     maxEnemyToShield: 2,
-    scoreLevelGame2: 1500,
+    scoreLevelGame2: 1000,
 };
 Clash.display = {};
 

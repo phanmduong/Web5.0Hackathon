@@ -72,7 +72,11 @@ class ShipController {
                 Clash.display.weapon.frameName = 'cannon1.jpg';
                 break;
             case 2:
-                Clash.display.weapon.frameName = 'rocket2.jpg';
+                if (this.sprite.numberBullet == 3) {
+                    Clash.display.weapon.frameName = 'rocket2.jpg';
+                } else {
+                    Clash.display.weapon.frameName = "cannon3.jpg";
+                }
                 break;
         }
 
@@ -150,17 +154,16 @@ class ShipController {
             this.timeSinceLastFire = 0;
             switch (this.sprite.bulletType) {
                 case 1:
-                    this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
-                    // this.createBullet1(new Phaser.Point(0.5, 0.5));
+                    // this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
+                    this.createBullet1(new Phaser.Point(0.5, 0.5));
                     break;
                 case 2:
                     if (this.sprite.numberBullet == 3) {
-                        this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
-                        this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
-                        // this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:50});
-                        // this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:-1});
+                        this.createBullet3(new Phaser.Point(0.5, 0.5), {angle: 0});
+                    } else {
+                        this.createBullet2(new Phaser.Point(0.5, 0.5), {angle: 0});
                     }
-                    this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
+
                     break;
                 default:
                     break;
@@ -178,6 +181,13 @@ class ShipController {
 
     createBullet2(direction, configs) {
         new BulletControllerType2(
+            this.sprite.position,
+            direction, configs
+        );
+    }
+
+    createBullet3(direction, configs) {
+        new BulletControllerType3(
             this.sprite.position,
             direction, configs
         );
