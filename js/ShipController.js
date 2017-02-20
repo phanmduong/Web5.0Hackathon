@@ -150,8 +150,8 @@ class ShipController {
             this.timeSinceLastFire = 0;
             switch (this.sprite.bulletType) {
                 case 1:
-                    // this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
-                    this.createBullet1(new Phaser.Point(0.5, 0.5));
+                    this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
+                    // this.createBullet1(new Phaser.Point(0.5, 0.5));
                     break;
                 case 2:
                     if (this.sprite.numberBullet == 3) {
