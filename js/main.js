@@ -332,7 +332,7 @@ var update = function () {
         }
 
         if (Clash.enemiesKilled >= Clash.configs.scoreLevelGame2) {
-            if (Clash.timeSinceLastItem >= Clash.configs.spawntimeItem && Clash.itemNumberHadEaten < Clash.configs.maxItemPowerup * 2){
+            if (Clash.timeSinceLastItem >= Clash.configs.spawntimeItem && Clash.itemNumberHadEaten < Clash.configs.maxItemPowerup * 2) {
                 new ItemController("frame0000.png", {
                     health: 1,
                     type: 2
@@ -380,10 +380,9 @@ var update = function () {
             if (Clash.itemNumberHadEaten >= Clash.configs.maxItemPowerup * 2) {
                 Clash.itemNumberHadEaten = Clash.configs.maxItemPowerup * 2;
             }
-            Clash.display.shipXP.scale.setTo(Clash.itemNumberHadEaten * 1.5 / (Clash.configs.maxItemPowerup*2), 1.5);
+            Clash.display.shipXP.scale.setTo(Clash.itemNumberHadEaten * 1.5 / (Clash.configs.maxItemPowerup * 2), 1.5);
         }
     }
-
 
 
 }
@@ -409,7 +408,12 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
     if (actorSprite.type == 2) {
         Clash.musicBonus.play();
         Clash.player.timeSinceLastBulletPowerup = 0;
+        Clash.player.timeSinceLastBulletPowerup2 = 0;
         Clash.itemNumberHadEaten++;
+
+        if (Clash.enemiesKilled >= Clash.configs.scoreLevelGame2) {
+            Clash.player.sprite.numberBullet = 3;
+        }
 
         Clash.player.sprite.bulletType = 2;
 
@@ -480,33 +484,7 @@ var collisionWithObject = function (object, actorSprite) {
 
 var killAllObject = function () {
     try {
-        Clash.enemyGroup.forEachAlive(killObject, this);
-        Clash.playerBulletGroup.forEachAlive(killObject, this);
-        Clash.itemGroup.forEachAlive(killObject, this);
-        killObject(Clash.player.sprite);
-        killObject(Clash.display.earthHP);
-        killObject(Clash.display.earthXP);
-        killObject(Clash.display.shipHP);
-        killObject(Clash.display.shipXP);
-        killObject(Clash.display.frameWeapon);
-        killObject(Clash.display.iconEarth);
-        killObject(Clash.display.iconEarthHP);
-        killObject(Clash.display.iconEarthXP);
-        killObject(Clash.display.iconShipXP);
-        killObject(Clash.display.iconShipHP);
-        killObject(Clash.display.weapon);
-        killObject(Clash.display.iconShip);
-        killObject(Clash.display.iconMouse);
-        killObject(Clash.display.iconPowerup);
-        killObject(Clash.display.progressPowerup);
-        killObject(Clash.display.iconEnemy);
-        killObject(Clash.display.clickHere);
-        killObject(Clash.sheild);
-        killObject(Clash.display.progressSheild);
-        killObject(Clash.display.iconSheild);
-        Clash.score.visible = false;
         Clash.highScore.visible = true;
-
         if (Clash.enemiesKilled > localStorage.getItem("score")) {
             localStorage.setItem("score", Clash.enemiesKilled);
             Clash.highScore.text = "New high score: " + localStorage.getItem("score");
@@ -515,10 +493,45 @@ var killAllObject = function () {
         }
     } catch (err) {
     }
+    try {
+        Clash.score.visible = false;
+    } catch (err) {
+    }
+
+
+    Clash.enemyGroup.forEachAlive(killObject, this);
+    Clash.playerBulletGroup.forEachAlive(killObject, this);
+    Clash.itemGroup.forEachAlive(killObject, this);
+    killObject(Clash.player.sprite);
+    killObject(Clash.display.earthHP);
+    killObject(Clash.display.earthXP);
+    killObject(Clash.display.shipHP);
+    killObject(Clash.display.shipXP);
+    killObject(Clash.display.frameWeapon);
+    killObject(Clash.display.iconEarth);
+    killObject(Clash.display.iconEarthHP);
+    killObject(Clash.display.iconEarthXP);
+    killObject(Clash.display.iconShipXP);
+    killObject(Clash.display.iconShipHP);
+    killObject(Clash.display.weapon);
+    killObject(Clash.display.iconShip);
+    killObject(Clash.display.iconMouse);
+    killObject(Clash.display.iconPowerup);
+    killObject(Clash.display.progressPowerup);
+    killObject(Clash.display.iconEnemy);
+    killObject(Clash.display.clickHere);
+    killObject(Clash.sheild.sprite);
+    killObject(Clash.display.progressSheild);
+    killObject(Clash.display.iconSheild);
 }
 
 var killObject = function (object) {
-    object.kill();
+    try {
+        object.kill();
+
+    } catch (err) {
+    }
+
 }
 
 var render = function () {

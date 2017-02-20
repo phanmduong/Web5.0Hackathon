@@ -10,7 +10,8 @@ class BulletControllerType1 extends BulletController {
                 nameMusic: 'shotcannon',
                 radius: 13,
                 transparency: false,
-                bulletStrength: Clash.itemNumberHadEaten + 1
+                bulletStrength: Clash.itemNumberHadEaten + 1,
+                angle: 0
             }
         );
     }

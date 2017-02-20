@@ -1,5 +1,5 @@
 class BulletControllerType2 extends BulletController {
-    constructor(position, direction) {
+    constructor(position, direction, configs) {
         super(
             position,
             "rocket2.png",
@@ -10,7 +10,8 @@ class BulletControllerType2 extends BulletController {
                 nameMusic: 'shotrocket',
                 radius: 20,
                 transparency: false,
-                bulletStrength: 10
+                bulletStrength: 10,
+                angle: configs.angle
             }
         );
     }
