@@ -18,10 +18,10 @@ class BulletController {
         this.sprite.transparency = this.configs.transparency;
 
         this.sprite.rotation = Clash.game.physics.arcade.angleToPointer(this.sprite) + Math.PI / 2;
-        Clash.game.physics.arcade.moveToXY(this.sprite,
-           (Clash.game.input.activePointer.x- Clash.player.sprite.body.position.x) * Math.cos(config.angle) - (Clash.game.input.activePointer.y - Clash.player.sprite.body.position.y) * Math.sin(config.angle) + Clash.player.sprite.body.position.x,
-            (Clash.game.input.activePointer.x - Clash.player.sprite.body.position.x) * Math.sin(config.angle) + (Clash.game.input.activePointer.y - Clash.player.sprite.body.position.y) * Math.cos(config.angle) + Clash.player.sprite.body.position.y,
-            config.bulletSpeed);
+        var x = (Clash.display.iconMouse.position.x - Clash.player.sprite.body.position.x) * Math.cos(config.angle) - (Clash.display.iconMouse.position.y - Clash.player.sprite.body.position.y) * Math.sin(config.angle) + Clash.player.sprite.body.position.x
+        var y = (Clash.display.iconMouse.position.x - Clash.player.sprite.body.position.x) * Math.sin(config.angle) + (Clash.display.iconMouse.position.y - Clash.player.sprite.body.position.y) * Math.cos(config.angle) + Clash.player.sprite.body.position.y;
+
+        Clash.game.physics.arcade.moveToXY(this.sprite,x,y,config.bulletSpeed);
 
 
         this.sprite.music = Clash.game.add.audio(config.nameMusic);
