@@ -34,7 +34,7 @@
 },
 "bullet-cannon2.png":
 {
-	"frame": {"x":588,"y":134,"w":32,"h":32},
+	"frame": {"x":622,"y":134,"w":32,"h":32},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
@@ -58,7 +58,7 @@
 },
 "bullet2-glow.png":
 {
-	"frame": {"x":550,"y":186,"w":32,"h":32},
+	"frame": {"x":588,"y":134,"w":32,"h":32},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
@@ -74,7 +74,7 @@
 },
 "cannon1.jpg":
 {
-	"frame": {"x":718,"y":266,"w":64,"h":64},
+	"frame": {"x":848,"y":2,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -82,7 +82,7 @@
 },
 "cannon2.jpg":
 {
-	"frame": {"x":848,"y":2,"w":64,"h":64},
+	"frame": {"x":784,"y":68,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -90,7 +90,7 @@
 },
 "clock1.png":
 {
-	"frame": {"x":554,"y":134,"w":32,"h":32},
+	"frame": {"x":550,"y":186,"w":32,"h":32},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
@@ -98,7 +98,7 @@
 },
 "cover-bullet.png":
 {
-	"frame": {"x":622,"y":134,"w":16,"h":32},
+	"frame": {"x":656,"y":134,"w":16,"h":32},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":32},
@@ -106,7 +106,7 @@
 },
 "frame0000.png":
 {
-	"frame": {"x":520,"y":134,"w":32,"h":32},
+	"frame": {"x":554,"y":134,"w":32,"h":32},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
@@ -114,11 +114,19 @@
 },
 "frame0001.png":
 {
-	"frame": {"x":784,"y":68,"w":64,"h":64},
+	"frame": {"x":724,"y":134,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
+},
+"frame0002.png":
+{
+	"frame": {"x":520,"y":134,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
 },
 "hp-detail.png":
 {
@@ -154,7 +162,7 @@
 },
 "planet-small.png":
 {
-	"frame": {"x":724,"y":134,"w":64,"h":64},
+	"frame": {"x":718,"y":300,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -162,7 +170,7 @@
 },
 "player1.png":
 {
-	"frame": {"x":718,"y":200,"w":64,"h":64},
+	"frame": {"x":718,"y":234,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -306,7 +314,7 @@
 },
 "ufo1-small1-part1.png":
 {
-	"frame": {"x":658,"y":134,"w":64,"h":64},
+	"frame": {"x":652,"y":300,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -314,7 +322,7 @@
 },
 "ufo1-small1-part2.png":
 {
-	"frame": {"x":652,"y":300,"w":64,"h":64},
+	"frame": {"x":658,"y":168,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -407,6 +415,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:9ec36a0529b10694e482699e67c194de:1/1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:10e4d3d6589b7fe252efc5941a2c698e:1/1$"
 }
 }

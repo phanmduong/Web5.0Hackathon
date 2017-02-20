@@ -14,6 +14,7 @@ class ItemController {
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
         this.sprite.health = this.configs.health;
         Clash.game.physics.arcade.moveToObject(this.sprite, Clash.earth.sprite, this.configs.enemySpeed);
+        this.sprite.scale.setTo(1.5, 1.5);
     }
 
     randomLocation() {
