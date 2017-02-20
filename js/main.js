@@ -28,10 +28,6 @@ window.onload = function () {
     );
 }
 
-function readFile(){
-    console.log(sessionStorage.getItem("testGame"));
-}
-
 // preparations before game starts
 var preload = function () {
     Clash.game.scale.minWidth = 256;
@@ -155,7 +151,7 @@ var createGame = function () {
     Clash.itemNumberHadEaten = 0;
 
     Clash.timeSinceLastSpawmEnemies = Clash.configs.spawntimeEnemy + 1;
-    Clash.timeSinceLastItem =0;
+    Clash.timeSinceLastItem = 0;
     Clash.timeSinceLastEnemyMeteorite = 0;
     Clash.timeSinceLastEnemyFast = 0;
     Clash.enemiesKilled = 0;
@@ -282,10 +278,25 @@ var update = function () {
             Clash.countEnemyFast = 0;
         }
 
+        // console.log(Clash.enemyGroup.length);
+        // console.log(Clash.playerBulletGroup.length);
 
-        Clash.enemyGroup.forEachAlive(function (enemy) {
-            enemy.father.update();
-        }, this);
+        Clash.enemyGroup.forEach(function (enemy) {
+            if (enemy.alive) {
+                enemy.father.update();
+            } else {
+                Clash.enemyGroup.remove(enemy)
+            }
+        })
+
+        Clash.playerBulletGroup.forEach(function (bullet) {
+            if (!bullet.alive) {
+                Clash.playerBulletGroup.remove(bullet)
+            }
+        });
+        // Clash.enemyGroup.forEachAlive(function (enemy) {
+        //
+        // }, this);
 
 
         Clash.timeSinceLastItem += Clash.game.time.physicsElapsed;
@@ -298,7 +309,7 @@ var update = function () {
             Clash.timeSinceLastItem = 0;
         }
 
-        if (Clash.game.time.now % Clash.configs.timeSpawnItemBoomFirst >= Clash.configs.timeSpawnItemBoomFirst / 2 ) {
+        if (Clash.game.time.now % Clash.configs.timeSpawnItemBoomFirst >= Clash.configs.timeSpawnItemBoomFirst / 2) {
             if (!Clash.isItemBoom) {
                 Clash.isItemBoom = true;
                 new ItemController("frame0002.png", {
@@ -306,7 +317,7 @@ var update = function () {
                     type: 1
                 });
             }
-        }else {
+        } else {
             Clash.isItemBoom = false;
         }
 
@@ -342,10 +353,10 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
         Clash.display.iconPowerup = createObjectDisplay({x: 250, y: 100}, "timeProgress.png", true);
     }
 
-    if (actorSprite.type == 1){
+    if (actorSprite.type == 1) {
         Clash.enemyGroup.forEachAlive(function (enemy) {
-            if (Math.sqrt(Math.pow(enemy.position.x-actorSprite.position.x,2)+
-                    Math.pow(enemy.position.y-actorSprite.position.y,2)) < Clash.configs.maxDistanceBoom){
+            if (Math.sqrt(Math.pow(enemy.position.x - actorSprite.position.x, 2) +
+                    Math.pow(enemy.position.y - actorSprite.position.y, 2)) < Clash.configs.maxDistanceBoom) {
                 enemy.damage(Clash.configs.damageItemBoom);
                 var explosion = Clash.explosions.getFirstExists(false);
                 explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
@@ -433,7 +444,7 @@ var render = function () {
     //     Clash.enemyGroup.forEachAlive(renderGroup, this);
     // } catch (err) {
     // }
-
+    //
     // Clash.playerBulletGroup.forEachAlive(renderGroup, this);
     // Clash.game.debug.body(Clash.display.iconMouse);
     // Clash.game.debug.body(Clash.earth.sprite);
