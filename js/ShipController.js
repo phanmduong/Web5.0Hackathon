@@ -155,6 +155,8 @@ class ShipController {
                     break;
                 case 2:
                     if (this.sprite.numberBullet == 3) {
+                        this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
+                        this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:0});
                         // this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:50});
                         // this.createBullet2(new Phaser.Point(0.5, 0.5), {angle:-1});
                     }

@@ -389,9 +389,13 @@ var update = function () {
 
 var collisionShieldAndEnemy = function (shield, enemy) {
     // console.log("enemy");
-    var explosion = Clash.explosions.getFirstExists(false);
-    explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
-    explosion.play('kaboom', 30, false, true);
+    try {
+        var explosion = Clash.explosions.getFirstExists(false);
+        explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
+        explosion.play('kaboom', 30, false, true);
+    } catch (err) {
+    }
+
     Clash.musicExplosion.play();
     Clash.enemiesKilled += enemy.score;
     enemy.kill();
@@ -430,9 +434,14 @@ var collisionBulletAndItem = function (bulletSprite, actorSprite) {
             try {
                 if (Math.sqrt(Math.pow(enemy.position.x - actorSprite.position.x, 2) +
                         Math.pow(enemy.position.y - actorSprite.position.y, 2)) < Clash.configs.maxDistanceBoom) {
-                    var explosion = Clash.explosions.getFirstExists(false);
-                    explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
-                    explosion.play('kaboom', 30, false, true);
+                    try{
+                        var explosion = Clash.explosions.getFirstExists(false);
+                        explosion.reset(enemy.body.x + 45, enemy.body.y + 45);
+                        explosion.play('kaboom', 30, false, true);
+                    } catch (err){
+
+                    }
+
                     enemy.damage(Clash.configs.damageItemBoom);
                     if (!enemy.alive) {
                         Clash.enemiesKilled += enemy.score;
@@ -452,7 +461,8 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
         var explosion = Clash.explosions.getFirstExists(false);
         explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
         explosion.play('kaboom', 30, false, true);
-    }catch (err){}
+    } catch (err) {
+    }
     Clash.musicExplosion.play();
     if (!bulletSprite.transparency) {
         const actorSpriteHealth = actorSprite.health;
@@ -472,9 +482,12 @@ var collisionBulletAndActor = function (bulletSprite, actorSprite) {
 }
 
 var collisionWithObject = function (object, actorSprite) {
-    var explosion = Clash.explosions.getFirstExists(false);
-    explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
-    explosion.play('kaboom', 30, false, true);
+    try{
+        var explosion = Clash.explosions.getFirstExists(false);
+        explosion.reset(actorSprite.body.x + 45, actorSprite.body.y + 45);
+        explosion.play('kaboom', 30, false, true);
+    } catch (err){}
+
     Clash.musicExplosion.play();
 
     object.damage(actorSprite.health);
