@@ -13,7 +13,7 @@ Clash.configs = {
     timeSpawnEnemyFastFirst: 30000,
     spawntimeEnemyFast: 1,
     timeSpawnItemBoomFirst: 60000,
-    maxDistanceBoom: 500,
+    maxDistanceBoom: 400,
     damageItemBoom: 8,
     maxEnemyToShield: 2,
     scoreLevelGame2: 1500,
